@@ -1,6 +1,6 @@
 import axios from "axios";
-import util from "./util";
-import cookie from "./cookie";
+import util from "../util/util";
+import cookie from "../util/cookie";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
