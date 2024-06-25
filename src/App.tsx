@@ -1,7 +1,5 @@
 import React from 'react';
 import './App.css';
-import { useEffect } from 'react';
-import {BrowserRouter, Link, useLocation} from 'react-router-dom';
 
 import "preline/preline";
 import { IStaticMethods } from "preline/preline";
