@@ -1,14 +1,15 @@
 import React from "react";
 
-function LabelInput(
-  labelText: string,
-  type: string,
-  id: string,
-  name: string = "",
-  value: string,
-  placeholder: string = "",
-  onChange: any,
-) {
+type Props = {
+  labelText?: string,
+  type?: string,
+  id?: string,
+  name?: string,
+  value?: string,
+  onChange?: (params?: any) => void,
+  placeholder?: string,
+}
+function LabelInput({ labelText, type, id, name, value, onChange, placeholder }: Props) {
   return (
     <>
       <div>
