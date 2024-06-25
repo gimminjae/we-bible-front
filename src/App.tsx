@@ -14,20 +14,11 @@ declare global {
 
 function App() {
   return (
-    <BrowserRouter>
-      <>
-        <div className='App'>
-          <nav style={{display: "flex", gap: '30px'}}>
-            <Link to="/">홈</Link>
-            |
-            <Link to="/sign-up">회원가입</Link>
-            |
-            <Link to="/sign-in">로그인</Link>
-          </nav>
-          <Router/>
-        </div>
-      </>
-    </BrowserRouter>
+    <>
+      <div className='App'>
+        <Router/>
+      </div>
+    </>
   );
 }
 
