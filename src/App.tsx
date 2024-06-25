@@ -1,25 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { useEffect } from 'react';
+import {BrowserRouter, Link, useLocation} from 'react-router-dom';
+
+import "preline/preline";
+import { IStaticMethods } from "preline/preline";
+import Router from "./router";
+declare global {
+  interface Window {
+    HSStaticMethods: IStaticMethods;
+  }
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React: React Project Init!
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <>
+        <div className='App'>
+          <nav style={{display: "flex", gap: '30px'}}>
+            <Link to="/">홈</Link>
+            |
+            <Link to="/sign-up">회원가입</Link>
+            |
+            <Link to="/sign-in">로그인</Link>
+          </nav>
+          <Router/>
+        </div>
+      </>
+    </BrowserRouter>
   );
 }
 
