@@ -57,6 +57,7 @@ function SignUpPage() {
                     name='email'
                     errorId='email-error'
                     errorMessage='Please include a valid email address so we can get back to you'
+                    placeholder=''
                   />
 
                   <div>
