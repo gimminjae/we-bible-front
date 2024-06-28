@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
-import FormItem from "../../components/FormItem";
+import FormInput from "../../components/FormInput";
 import { useFormik } from "formik";
 import Button from "../../components/Button";
 
@@ -94,7 +94,7 @@ function SignUpPage() {
               <form>
                 <div className="grid gap-y-4">
                   {/*// <!-- Form Group -->*/}
-                  <FormItem
+                  <FormInput
                     htmlFor="email"
                     labelText="Email address"
                     type="email"
@@ -102,10 +102,10 @@ function SignUpPage() {
                     name="email"
                     value={values.email}
                     onChange={handleChange}
-                    errorMessage="Please include a valid email address so we can get back to you"
+                    errorMessage={errorMessages.email}
                     placeholder=""
                   />
-                  <FormItem
+                  <FormInput
                     htmlFor="nickname"
                     labelText="Nickname"
                     type="text"
@@ -113,10 +113,10 @@ function SignUpPage() {
                     name="nickname"
                     value={values.nickname}
                     onChange={handleChange}
-                    errorMessage=""
+                    errorMessage={errorMessages.nickname}
                     placeholder=""
                   />
-                  <FormItem
+                  <FormInput
                     htmlFor="password"
                     labelText="Password"
                     type="password"
@@ -124,10 +124,10 @@ function SignUpPage() {
                     name="password"
                     value={values.password}
                     onChange={handleChange}
-                    errorMessage="8+ characters required"
+                    errorMessage={errorMessages.password}
                     placeholder=""
                   />
-                  <FormItem
+                  <FormInput
                     htmlFor="confirm-password"
                     labelText="Confirm Password"
                     type="password"
@@ -135,7 +135,7 @@ function SignUpPage() {
                     name="confirmPassword"
                     value={values.confirmPassword}
                     onChange={handleChange}
-                    errorMessage="Password does not match the password"
+                    errorMessage={errorMessages.confirmPassword}
                     placeholder=""
                   />
                   <Button

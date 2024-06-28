@@ -1,6 +1,6 @@
 import React from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import FormItem from "../../components/FormItem";
+import { Link, useNavigate } from "react-router-dom";
+import FormInput from "../../components/FormInput";
 import Button from "../../components/Button";
 
 function SignInPage() {
@@ -64,24 +64,20 @@ function SignInPage() {
               {/*// <!-- Form -->*/}
               <form>
                 <div className="grid gap-y-4">
-                  <FormItem
+                  <FormInput
                     htmlFor="email"
                     labelText="Email address"
                     type="email"
                     id="email"
                     name="email"
-                    errorId="email-error"
-                    errorMessage="Please include a valid email address so we can get back to you"
                     placeholder=""
                   />
-                  <FormItem
+                  <FormInput
                     htmlFor="password"
                     labelText="Password"
                     type="password"
                     id="password"
                     name="password"
-                    errorId="password-error"
-                    errorMessage="8+ characters required"
                     placeholder=""
                     clickText="Forgot password?"
                     onClick={() => navigate("/forgot-password")}
