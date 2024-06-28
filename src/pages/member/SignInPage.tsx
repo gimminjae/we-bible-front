@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import FormItem from "../../components/FormItem";
+import Button from "../../components/Button";
 
 function SignInPage() {
   const navigate = useNavigate();
@@ -105,13 +106,17 @@ function SignInPage() {
                     </div>
                   </div>
                   {/*// <!-- End Checkbox -->*/}
-
-                  <button
-                    type="submit"
-                    className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                  >
-                    Sign in
-                  </button>
+                  <Button
+                    type={"Solid"}
+                    size={"Default"}
+                    color={"blue"}
+                    block={"block"}
+                    shape={"not-round"}
+                    icon={""}
+                    disabled={false}
+                    text={'Sign in'}
+                    onClick={() => alert('btn click')}
+                  />
                 </div>
               </form>
               {/*<!-- End Form -->*/}
