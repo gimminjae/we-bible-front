@@ -13,4 +13,14 @@ module.exports = function (app: any) {
       // autoRewrite: true,
     })
   );
+  app.use(
+    "/bible",
+    createProxyMiddleware({
+      target: "https://djbe4b57ezark.cloudfront.net",
+      changeOrigin: true,
+      pathRewrite: {
+        "^/": "/bible/",
+      },
+    })
+  );
 };

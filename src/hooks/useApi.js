@@ -1,8 +1,8 @@
 import axios from "axios";
 import util from "../util/util";
 import cookie from "../util/cookie";
-import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const api = {
   post,
@@ -13,25 +13,26 @@ export const api = {
 };
 // const baseURL = process.env.REACT_APP_BO_API_URL
 const instance = axios.create();
+instance.defaults.withCredentials = true;
 instance.interceptors.request.use(
   async (config) => {
-    config.withCredentials = true
+    config.withCredentials = true;
 
-    let accessToken = cookie.get('accessToken')
+    let accessToken = cookie.get("accessToken");
     if (!accessToken) {
       try {
-        const {data} = await axios.get(`/api/member/access-token?refreshToken=${cookie.get('refreshToken')}`)
-        cookie.set('accessToken', data)
-        accessToken = data
-      } catch (error) {
-
-      }
+        const { data } = await axios.get(
+          `/api/member/access-token?refreshToken=${cookie.get("refreshToken")}`
+        );
+        cookie.set("accessToken", data);
+        accessToken = data;
+      } catch (error) {}
     }
-    config.headers.Authorization = accessToken
-    return config
+    config.headers.Authorization = accessToken;
+    return config;
   },
   (error) => {
-    alert('error 발생')
+    alert("error 발생");
   }
 );
 
@@ -40,7 +41,9 @@ function post(url, data = {}) {
 }
 
 function get(url, data = {}) {
-  return instance.get(`${url}${util.makeSearchParam(data)}`).then((response) => response.data);
+  return instance
+    .get(`${url}${util.makeSearchParam(data)}`)
+    .then((response) => response.data);
 }
 
 function put(url, data = {}) {
@@ -48,44 +51,41 @@ function put(url, data = {}) {
 }
 
 function remove(url, data = {}) {
-  return instance.delete(`${url}${util.makeSearchParam(data)}`).then((response) => response.data);
+  return instance
+    .delete(`${url}${util.makeSearchParam(data)}`)
+    .then((response) => response.data);
 }
 
 function head(url, data = {}) {
   return instance.head(url, data).then((response) => response.data);
 }
 
-const useApi = ({
-                  api,
-                  onSuccess,
-                  onError,
-                  onComplete,
-                }) => {
-  const [data, setData] = useState()
-  const navigate = useNavigate()
+const useApi = ({ api, onSuccess, onError, onComplete }) => {
+  const [data, setData] = useState();
+  const navigate = useNavigate();
 
   const callApi = (params) =>
     api(params)
-      .then(res => {
-        setData(res.data)
-        if (onSuccess) onSuccess(res.data, params)
-        return res.data
+      .then((res) => {
+        setData(res.data);
+        if (onSuccess) onSuccess(res.data, params);
+        return res.data;
       })
-      .catch(err => {
+      .catch((err) => {
         if (err.response?.status === 401) {
-          navigate('/')
+          navigate("/");
           // dispatch(logout())
         }
-        if (onError) onError(err)
+        if (onError) onError(err);
       })
       .finally(() => {
-        if (onComplete) onComplete()
-      })
+        if (onComplete) onComplete();
+      });
 
   return {
     callApi,
     data,
-  }
-}
+  };
+};
 
-export default useApi
+export default useApi;
