@@ -24,6 +24,7 @@ function Header() {
               <a className="py-3 ps-px sm:px-3 sm:py-6 font-medium text-gray-800 hover:text-gray-500 dark:text-neutral-200 dark:hover:text-neutral-400" href="#">Account</a>
               <a className="py-3 ps-px sm:px-3 sm:py-6 font-medium text-gray-800 hover:text-gray-500 dark:text-neutral-200 dark:hover:text-neutral-400" href="#">Work</a>
               <a className="py-3 ps-px sm:px-3 sm:py-6 font-medium text-gray-800 hover:text-gray-500 dark:text-neutral-200 dark:hover:text-neutral-400" href="#">Blog</a>
+              <Link className="py-3 ps-px sm:px-3 sm:py-6 font-medium text-gray-800 hover:text-gray-500 dark:text-neutral-200 dark:hover:text-neutral-400" to="bible">Bible</Link>
 
               <div className="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none] sm:[--trigger:hover] py-3 ps-px sm:ps-3 sm:py-6">
                 <button type="button" className="flex items-center w-full text-gray-800 hover:text-gray-500 font-medium dark:text-neutral-200 dark:hover:text-neutral-400">

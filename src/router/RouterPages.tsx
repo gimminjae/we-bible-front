@@ -2,6 +2,7 @@ import React, {ReactNode} from "react";
 import SignUpPage from "../pages/member/SignUpPage";
 import SignInPage from "../pages/member/SignInPage";
 import ForgotPassword from "../pages/member/ForgotPassword";
+import BibleViewPage from "../pages/bible/BibleViewPage";
 
 
 const Home = () => <div>Home Page</div>
@@ -25,5 +26,9 @@ export const RouterPages: Page[] = [
   {
     path: '/forgot-password',
     page: <ForgotPassword />
+  },
+  {
+    path: '/bible',
+    page: <BibleViewPage />
   }
 ]
