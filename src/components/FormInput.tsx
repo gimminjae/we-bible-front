@@ -1,6 +1,6 @@
 import React from "react";
 
-type Props = {
+interface Props {
   htmlFor?: string;
   labelText?: string;
   type?: string;

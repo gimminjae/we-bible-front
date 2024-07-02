@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 
-type Props = {
+interface Props {
   type: "Solid" | "Outline" | "Ghost" | "Soft" | "White" | "Link";
   size: "Small" | "Default" | "Large";
   color: string | "black" | "gray" | "green" | "blue" | "red" | "yellow" | "white";
