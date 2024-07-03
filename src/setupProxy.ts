@@ -14,12 +14,12 @@ module.exports = function (app: any) {
     })
   );
   app.use(
-    "/bible",
+    "/dev/bible",
     createProxyMiddleware({
-      target: "https://djbe4b57ezark.cloudfront.net",
+      target: "https://u0bcvttz8k.execute-api.ap-northeast-2.amazonaws.com",
       changeOrigin: true,
       pathRewrite: {
-        "^/": "/bible/",
+        "^/": "/dev/bible/",
       },
     })
   );

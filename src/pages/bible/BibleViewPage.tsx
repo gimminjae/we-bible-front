@@ -13,7 +13,7 @@ function BibleViewPage() {
     onComplete: () => console.log('complete')
   })
 
-  const [bibles, setBibles] = useState<any[]>([])
+  const [bibles, setBibles] = useState<any>()
 
   useEffect(() => {
     getBible({ book: 'genesis', chapter: 1, locale: 'ko' })
