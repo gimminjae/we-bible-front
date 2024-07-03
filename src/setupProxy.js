@@ -1,7 +1,7 @@
 // @ts-ignore
-const {createProxyMiddleware}: any = require("http-proxy-middleware");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
-module.exports = function (app: any) {
+module.exports = function (app) {
   app.use(
     "/api",
     createProxyMiddleware({
@@ -14,12 +14,12 @@ module.exports = function (app: any) {
     })
   );
   app.use(
-    "/dev/bible",
+    "/dev",
     createProxyMiddleware({
       target: "https://u0bcvttz8k.execute-api.ap-northeast-2.amazonaws.com",
       changeOrigin: true,
       pathRewrite: {
-        "^/": "/dev/bible/",
+        "^/": "/dev",
       },
     })
   );
