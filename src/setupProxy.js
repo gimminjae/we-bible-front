@@ -14,13 +14,13 @@ module.exports = function (app) {
     })
   );
   app.use(
-    "/dev",
+    "/bible",
     createProxyMiddleware({
-      target: "https://u0bcvttz8k.execute-api.ap-northeast-2.amazonaws.com",
+      target: "http://localhost:8080",
       changeOrigin: true,
-      pathRewrite: {
-        "^/": "/dev",
-      },
+      // pathRewrite: {
+      //   "^/": "/bible",
+      // },
     })
   );
 };

@@ -8,7 +8,7 @@ interface BibleInfo {
 const bibleService = {
   getBible(params: BibleInfo) {
     if (params.locale === 'ko' || params.locale === null) {
-      api.get(`/dev/bible?book=${params.book}&chapter=${params.chapter}`)
+      return api.get(`/bible?book=${params.book}&chapter=${params.chapter}`)
     } else {
 
     }
