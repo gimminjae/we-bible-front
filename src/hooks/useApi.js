@@ -40,9 +40,9 @@ function post(url, data = {}) {
   return instance.post(url, data).then((response) => response.data);
 }
 
-function get(url, data = {}) {
+function get(url, data = {}, config = {}) {
   return instance
-    .get(`${url}${util.makeSearchParam(data)}`)
+    .get(`${url}${util.makeSearchParam(data)}`, config)
     .then((response) => response.data);
 }
 

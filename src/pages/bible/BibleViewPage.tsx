@@ -17,6 +17,7 @@ function BibleViewPage() {
 
   useEffect(() => {
     getBible({ book: 1, chapter: 1, locale: "ko" });
+    getBible({ book: 1, chapter: 1, locale: "en" });
   }, []);
   return (
     <>
