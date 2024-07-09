@@ -69,6 +69,7 @@ const bibleInfos = [
   { bookName: "revelation", bookSeq: 66 },
 ];
 const kjvBibleInfo = [
+  { bookName: "zeroIndex", bookSeq: 0 },
   { bookName: "genesis",bookSeq: 1 },
   { bookName: "exodus",bookSeq: 2 },
   { bookName: "leviticus",bookSeq: 3 },
