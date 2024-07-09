@@ -24,14 +24,13 @@ module.exports = function (app) {
     })
   );
   app.use(
-    "/gh",
+    "/ex-bible",
     createProxyMiddleware({
       target: "https://cdn.jsdelivr.net",
-      // target: "http://localhost:8080",
       changeOrigin: true,
-      pathRewrite: {
-        "^/": "/gh",
-      },
+      // pathRewrite: {
+      //   "^/": "/gh/wldeh",
+      // },
     })
   );
 };

@@ -67,9 +67,9 @@ const useApi = ({ api, onSuccess, onError, onComplete }) => {
   const callApi = (params) =>
     api(params)
       .then((res) => {
-        setData(res.data);
-        if (onSuccess) onSuccess(res.data, params);
-        return res.data;
+        setData(res);
+        if (onSuccess) onSuccess(res, params);
+        return res;
       })
       .catch((err) => {
         if (err.response?.status === 401) {

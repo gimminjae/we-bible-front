@@ -158,9 +158,11 @@ interface BibleInfo {
 const bibleService = {
   getBible(params: BibleInfo) {
     if (params.locale === 'ko' || params.locale === null) {
-      return api.get(`/bible?book=${params.book}&chapter=${params.chapter}`)
+      const bookName = bibleInfos[Number(params.book)].bookName
+      return api.get(`/bible?book=${bookName}&chapter=${params.chapter}`)
     } else {
-      api.get(`/gh/wldeh/bible-api/bibles/en-kjv/books/${kjvBibleInfo[Number(params.book)].bookName}/chapters/${params.chapter}.json`)
+      const bookName = kjvBibleInfo[Number(params.book)].bookName
+      return api.get(`/ex-bible/gh/wldeh/bible-api/bibles/en-kjv/books/${bookName}/chapters/${params.chapter}.json`)
     }
   }
 }
