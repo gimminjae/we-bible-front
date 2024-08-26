@@ -1,4 +1,5 @@
-import {api} from "../hooks/useApi";
+import { api } from "../hooks/useApi"
+
 const bibleInfos = [
   { bookName: "zeroIndex", bookSeq: 0 },
   { bookName: "genesis", bookSeq: 1 },
@@ -67,18 +68,18 @@ const bibleInfos = [
   { bookName: "3john", bookSeq: 64 },
   { bookName: "jude", bookSeq: 65 },
   { bookName: "revelation", bookSeq: 66 },
-];
+]
 const kjvBibleInfo = [
   { bookName: "zeroIndex", bookSeq: 0 },
-  { bookName: "genesis",bookSeq: 1 },
-  { bookName: "exodus",bookSeq: 2 },
-  { bookName: "leviticus",bookSeq: 3 },
-  { bookName: "numbers",bookSeq: 4 },
-  { bookName: "deuteronomy",bookSeq: 5 },
-  { bookName: "joshua",bookSeq: 6 },
-  { bookName: "judges",bookSeq: 7 },
-  { bookName: "ruth",bookSeq: 8 },
-  { bookName: "1samuel",bookSeq: 9 },
+  { bookName: "genesis", bookSeq: 1 },
+  { bookName: "exodus", bookSeq: 2 },
+  { bookName: "leviticus", bookSeq: 3 },
+  { bookName: "numbers", bookSeq: 4 },
+  { bookName: "deuteronomy", bookSeq: 5 },
+  { bookName: "joshua", bookSeq: 6 },
+  { bookName: "judges", bookSeq: 7 },
+  { bookName: "ruth", bookSeq: 8 },
+  { bookName: "1samuel", bookSeq: 9 },
   { bookName: "2samuel", bookSeq: 10 },
   { bookName: "1kings", bookSeq: 11 },
   { bookName: "2kings", bookSeq: 12 },
@@ -149,23 +150,25 @@ const kjvBibleInfo = [
   { bookName: "2maccabees", bookSeq: 77 },
   { bookName: "esther(greek)", bookSeq: 78 },
   { bookName: "songofthethree", bookSeq: 79 },
-  { bookName: "susanna",bookSeq: 80 }
+  { bookName: "susanna", bookSeq: 80 },
 ]
 interface BibleInfo {
-  book: string,
-  chapter: number,
+  book: string
+  chapter: number
   locale?: string
 }
 const bibleService = {
   getBible(params: BibleInfo) {
-    if (params.locale === 'ko' || params.locale === null) {
+    if (params.locale === "ko" || params.locale === null) {
       const bookName = bibleInfos[Number(params.book)].bookName
       return api.get(`/bible?book=${bookName}&chapter=${params.chapter}`)
     } else {
       const bookName = kjvBibleInfo[Number(params.book)].bookName
-      return api.get(`/ex-bible/gh/wldeh/bible-api/bibles/en-kjv/books/${bookName}/chapters/${params.chapter}.json`)
+      return api.get(
+        `/ex-bible/gh/wldeh/bible-api/bibles/en-kjv/books/${bookName}/chapters/${params.chapter}.json`
+      )
     }
-  }
+  },
 }
 
 export default bibleService

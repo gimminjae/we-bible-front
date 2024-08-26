@@ -1,71 +1,59 @@
-import React, { useEffect, useState } from "react";
-import useApi from "../../hooks/useApi";
-import bibleService from "../../api/bible";
-import Button from "../../components/Button";
+import React, { useEffect, useState } from "react"
+import bibleService from "../../api/bible"
+import useApi from "../../hooks/useApi"
+import { Button } from "@mui/material"
 
 function BibleViewPage() {
   const { callApi: getBible } = useApi({
     api: bibleService.getBible,
     onSuccess: async (data: any) => {
-      console.log("data: ", data);
+      console.log("data: ", data)
       setBibles(
-        data.data
-          ? data.data.map((i: any) => ({
+        data
+          ? data.map((i: any) => ({
               bookName: i.book,
               content: i.text,
+              chapter: i.chapter,
               verse: i.verse,
             }))
           : data
-      );
+      )
     },
     onError: (error: any) => console.log(error),
     onComplete: () => console.log("complete"),
-  });
+  })
 
-  const [bibles, setBibles] = useState<any[]>();
+  const [bibles, setBibles] = useState<any[]>()
 
   useEffect(() => {
     // getBible({ book: 1, chapter: 1, locale: "ko" });
     // getBible({ book: 1, chapter: 1, locale: "en" });
-  }, []);
+  }, [])
+  useEffect(() => {
+    console.log(bibles)
+  }, [bibles])
   return (
     <>
       <div>bible view page</div>
       <div className="flex gap-3">
-        <Button
-          type={"Solid"}
-          size={"Default"}
-          color={"blue"}
-          block={"block"}
-          shape={"not-round"}
-          icon={""}
-          disabled={false}
-          text={"en"}
-          onClick={() => getBible({ book: 1, chapter: 1, locale: "en" })}
-        />
-        <Button
-          type={"Solid"}
-          size={"Default"}
-          color={"blue"}
-          block={"block"}
-          shape={"not-round"}
-          icon={""}
-          disabled={false}
-          text={"ko"}
-          onClick={() => getBible({ book: 1, chapter: 1, locale: "ko" })}
-        />
+        <Button onClick={() => getBible({ book: 1, chapter: 1, locale: "en" })}>
+          en
+        </Button>
+        <Button onClick={() => getBible({ book: 1, chapter: 1, locale: "ko" })}>
+          ko
+        </Button>
       </div>
-      <ul>
+      <ol>
         {bibles &&
-          bibles.length &&
+          bibles.length > 0 &&
           bibles.map((bible: any) => (
             <li>
               {bible.verse} {bible.content}
             </li>
           ))}
-      </ul>
+      </ol>
     </>
-  );
+  )
 }
 
-export default BibleViewPage;
+export default BibleViewPage
