@@ -7,16 +7,14 @@ function BibleViewPage() {
   const { callApi: getBible } = useApi({
     api: bibleService.getBible,
     onSuccess: async (data: any) => {
-      console.log("data: ", data)
       setBibles(
-        data
-          ? data.map((i: any) => ({
-              bookName: i.book,
-              content: i.text,
-              chapter: i.chapter,
-              verse: i.verse,
-            }))
-          : data
+        data?.map((i: any) => ({
+          ...i,
+          bookName: i.book,
+          content: i.content || i.text,
+          chapter: i.chapter,
+          verse: i.verse,
+        })) || []
       )
     },
     onError: (error: any) => console.log(error),

@@ -158,10 +158,15 @@ interface BibleInfo {
   locale?: string
 }
 const bibleService = {
-  getBible(params: BibleInfo) {
+  async getBible(params: BibleInfo) {
     if (params.locale === "ko" || params.locale === null) {
       const bookName = bibleInfos[Number(params.book)].bookName
-      return api.get(`/bible?book=${bookName}&chapter=${params.chapter}`)
+      return api.get(
+        `https://webible.s3.ap-northeast-2.amazonaws.com/bible/${bookName}/${params.chapter}.json`
+      ) //.then((response) => response.json())
+      // console.log("result: ", result)
+      // return result
+      // return api.get(`/bible/${bookName}/${params.chapter}.json`)
     } else {
       const bookName = kjvBibleInfo[Number(params.book)].bookName
       return api.get(

@@ -1,5 +1,5 @@
 // @ts-ignore
-const { createProxyMiddleware } = require("http-proxy-middleware");
+const { createProxyMiddleware } = require("http-proxy-middleware")
 
 module.exports = function (app) {
   // app.use(
@@ -16,13 +16,13 @@ module.exports = function (app) {
   app.use(
     "/bible",
     createProxyMiddleware({
-      target: "http://localhost:8080",
+      target: "https://webible.s3.ap-northeast-2.amazonaws.com",
       changeOrigin: true,
       pathRewrite: {
         "^/": "/bible",
       },
     })
-  );
+  )
   app.use(
     "/ex-bible",
     createProxyMiddleware({
@@ -32,5 +32,5 @@ module.exports = function (app) {
       //   "^/": "/gh/wldeh",
       // },
     })
-  );
-};
+  )
+}
