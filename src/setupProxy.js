@@ -28,9 +28,9 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: "https://cdn.jsdelivr.net",
       changeOrigin: true,
-      // pathRewrite: {
-      //   "^/": "/gh/wldeh",
-      // },
+      pathRewrite: {
+        "^/": "/ex-bible",
+      },
     })
   )
 }
