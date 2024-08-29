@@ -170,7 +170,7 @@ const bibleService = {
     } else {
       const bookName = kjvBibleInfo[Number(params.book)].bookName
       return api.get(
-        `/ex-bible/gh/wldeh/bible-api/bibles/en-kjv/books/${bookName}/chapters/${params.chapter}.json`
+        `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/en-kjv/books/${bookName}/chapters/${params.chapter}.json`
       )
     }
   },
