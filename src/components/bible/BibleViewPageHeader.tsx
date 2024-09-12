@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Button, ButtonGroup} from "@mui/material";
 import LangSelect from "./LangSelect";
+import useBibleSearchParams from "../../store/zustand/BibleSearchParams";
 
 interface Props {
   selectedLang: 'ko' | 'en'
@@ -11,6 +12,7 @@ interface Props {
 function BibleViewPageHeader() {
   const book = 'genesis'
   const chapter = 1
+  const bibleSearchParam: any = useBibleSearchParams()
   return (
     <div className='flex justify-between m-2'>
       <ButtonGroup
@@ -22,8 +24,11 @@ function BibleViewPageHeader() {
       >
         <Button>{book}</Button>
         <Button>{chapter}</Button>
+        <Button onClick={() => bibleSearchParam.next()}>next</Button>
+        <Button onClick={() => bibleSearchParam.previous()}>previous</Button>
       </ButtonGroup>
       <LangSelect/>
+      <p>{bibleSearchParam?.searchParam?.chapter || ''}</p>
     </div>
   )
 }

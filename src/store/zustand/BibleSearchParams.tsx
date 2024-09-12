@@ -5,36 +5,38 @@ type BibleSearchParam = {
   chapter: number
   lang: 'ko' | 'en' | string
 }
-// type Store = {
-//   searchParam: BibleSearchParam
-//   set: any
-// }
+type Store = {
+  searchParam: BibleSearchParam
+  set: any
+  next: any
+  previous: any
+  changeLang: any
+}
 
-const useBibleSearchParams = create((set) => ({
+const useBibleSearchParams = create<Store>((set) => ({
   searchParam: {
     bookCode: 'genesis',
     chapter: 1,
     lang: 'ko'
   },
-  set: (state: BibleSearchParam) => set(() => ({
+  next: () => set(({ searchParam: state }: { searchParam: BibleSearchParam}) => ({
     searchParam: {
-      bookCode: state.bookCode,
-      chapter: state.chapter,
-      ko: state.lang
+      ...state,
+      chapter: state.chapter + 1
     }
   })),
-  next: () => set((state: BibleSearchParam) => ({
+  previous: () => set(({ searchParam: state }: { searchParam: BibleSearchParam}) => ({
     searchParam: {
-      chapter: state.chapter + 1,
+      ...state,
+      chapter: state.chapter - 1
     }
   })),
-  previous: () => set((state: BibleSearchParam) => ({
-    searchParam: {
-      chapter: state.chapter - 1,
-    }
+  set: (input: BibleSearchParam) => set(() => ({
+    searchParam: input
   })),
-  changeLang: (lang: string) => set(() => ({
+  changeLang: (lang: string) => set(({ searchParam: state }: { searchParam: BibleSearchParam}) => ({
     searchParam: {
+      ...state,
       lang
     }
   })),
