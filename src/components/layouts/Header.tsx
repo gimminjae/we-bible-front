@@ -1,6 +1,8 @@
 import React from "react"
+import useHeader from "../../hooks/useHeader";
 
 function Header() {
-  return <header>header</header>
+  const { header } = useHeader()
+  return <header>{header}</header>
 }
 export default React.memo(Header)

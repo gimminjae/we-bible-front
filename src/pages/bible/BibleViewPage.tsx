@@ -1,9 +1,21 @@
-import React, { useEffect, useState } from "react"
+import React, {useEffect, useMemo, useState} from "react"
 import bibleService from "../../api/bible"
 import useApi from "../../hooks/useApi"
 import { Button } from "@mui/material"
+import useHeader from "../../hooks/useHeader";
 
 function BibleViewPage() {
+  const header = useMemo(() => (
+    <div>
+      <Button onClick={() => console.log('click header')}>
+        header
+      </Button>
+      <Button onClick={() => console.log('click header2')}>
+        header2
+      </Button>
+    </div>
+  ), [])
+  const { setMenu } = useHeader()
   const { callApi: getBible } = useApi({
     api: bibleService.getBible,
     onSuccess: async (data: any) => {
@@ -24,8 +36,7 @@ function BibleViewPage() {
   const [bibles, setBibles] = useState<any[]>()
 
   useEffect(() => {
-    // getBible({ book: 1, chapter: 1, locale: "ko" });
-    // getBible({ book: 1, chapter: 1, locale: "en" });
+    setMenu(header)
   }, [])
   useEffect(() => {
     console.log(bibles)
