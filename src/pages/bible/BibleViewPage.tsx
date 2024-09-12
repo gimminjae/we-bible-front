@@ -3,18 +3,9 @@ import bibleService from "../../api/bible"
 import useApi from "../../hooks/useApi"
 import { Button } from "@mui/material"
 import useHeader from "../../hooks/useHeader";
+import BibleViewPageHeader from "../../components/bible/BibleViewPageHeader";
 
 function BibleViewPage() {
-  const header = useMemo(() => (
-    <div>
-      <Button onClick={() => console.log('click header')}>
-        header
-      </Button>
-      <Button onClick={() => console.log('click header2')}>
-        header2
-      </Button>
-    </div>
-  ), [])
   const { setMenu } = useHeader()
   const { callApi: getBible } = useApi({
     api: bibleService.getBible,
@@ -36,7 +27,7 @@ function BibleViewPage() {
   const [bibles, setBibles] = useState<any[]>()
 
   useEffect(() => {
-    setMenu(header)
+    setMenu(<BibleViewPageHeader/>)
   }, [])
   useEffect(() => {
     console.log(bibles)

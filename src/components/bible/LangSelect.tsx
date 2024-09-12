@@ -8,12 +8,9 @@ interface Props {
   selectedLang: 'ko' | 'en'
   onChange: any
 }
-function LangSelect({
-  selectedLang,
-  onChange
-                    }: Props) {
+function LangSelect() {
   const handleChange = (event: SelectChangeEvent) => {
-    if (onChange) onChange(event?.target?.value)
+    // if (onChange) onChange(event?.target?.value)
   };
 
   return (
@@ -22,7 +19,7 @@ function LangSelect({
       <Select
         labelId="demo-select-small-label"
         id="demo-select-small"
-        value={selectedLang}
+        value='ko'
         label="Language"
         onChange={handleChange}
       >

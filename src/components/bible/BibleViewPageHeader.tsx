@@ -8,12 +8,9 @@ interface Props {
   book?: string
   chapter?: number
 }
-function BibleViewPageHeader({
-  selectedLang,
-  onLangChange,
-  book = 'genesis',
-  chapter = 1
-                             }: Props) {
+function BibleViewPageHeader() {
+  const book = 'genesis'
+  const chapter = 1
   return (
     <div className='flex justify-between m-2'>
       <ButtonGroup
@@ -26,10 +23,7 @@ function BibleViewPageHeader({
         <Button>{book}</Button>
         <Button>{chapter}</Button>
       </ButtonGroup>
-      <LangSelect
-        onChange={onLangChange}
-        selectedLang={selectedLang}
-      />
+      <LangSelect/>
     </div>
   )
 }
