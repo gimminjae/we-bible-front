@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import {Button, ButtonGroup} from "@mui/material";
 import LangSelect from "./LangSelect";
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams";
+import {setCookie} from "../../util/cookie";
 
 interface Props {
   selectedLang: 'ko' | 'en'
@@ -12,7 +13,11 @@ interface Props {
 function BibleViewPageHeader() {
   const book = 'genesis'
   const chapter = 1
-  const bibleSearchParam: any = useBibleSearchParams()
+  const bibleSearchParam = useBibleSearchParams()
+
+  useEffect(() => {
+    setCookie('bibleSearchParam', JSON.stringify(bibleSearchParam.searchParam))
+  }, [bibleSearchParam.searchParam])
   return (
     <div className='flex justify-between m-2'>
       <ButtonGroup
