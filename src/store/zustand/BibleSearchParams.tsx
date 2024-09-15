@@ -21,20 +21,12 @@ const initialValue = {
   lang: "ko",
 }
 
-const getPreviousBookCode = (bookCode: string) => {
-  const presentBibleIndex = bibleInfos.findIndex(
-    (bible) => bible.bookCode === bookCode
-  )
-  const bible = bibleInfos[presentBibleIndex - 1]
-  return bible
-}
-const getNextBookCode = (bookCode: string) => {
-  const presentBibleIndex = bibleInfos.findIndex(
-    (bible) => bible.bookCode === bookCode
-  )
-  const bible = bibleInfos[presentBibleIndex + 1]
-  return bible
-}
+const getPreviousBookCode = (bookCode: string) =>
+  bibleInfos[bibleInfos.findIndex((bible) => bible.bookCode === bookCode) - 1]
+const getNextBookCode = (bookCode: string) =>
+  bibleInfos[bibleInfos.findIndex((bible) => bible.bookCode === bookCode) + 1]
+const getPresentBible = (bookCode: string) =>
+  bibleInfos.find((info) => info.bookCode === bookCode)
 
 const bibleSearchParamFromCookie = getCookie("bibleSearchParam")
 
@@ -42,7 +34,7 @@ const useBibleSearchParams = create<Store>((set: any) => ({
   searchParam: bibleSearchParamFromCookie || initialValue,
   next: () =>
     set(({ searchParam: state }: { searchParam: BibleSearchParam }) => {
-      const bible = bibleInfos.find((info) => info.bookCode === state.bookCode)
+      const bible = getPresentBible(state.bookCode)
       const newChapter = state.chapter + 1
       return (bible?.maxChapter || 0) < newChapter
         ? {
@@ -60,16 +52,17 @@ const useBibleSearchParams = create<Store>((set: any) => ({
           }
     }),
   previous: () =>
-    set(({ searchParam: state }: { searchParam: BibleSearchParam }) => ({
-      searchParam: {
-        ...state,
-        bookCode: !(state.chapter - 1)
-          ? getPreviousBookCode(state.bookCode).bookCode
-          : state.bookCode,
-        chapter:
-          state.chapter - 1 || getPreviousBookCode(state.bookCode).maxChapter,
-      },
-    })),
+    set(({ searchParam: state }: { searchParam: BibleSearchParam }) => {
+      const previousBible = getPreviousBookCode(state.bookCode)
+      const newChapter = state.chapter - 1
+      return {
+        searchParam: {
+          ...state,
+          bookCode: !newChapter ? previousBible.bookCode : state.bookCode,
+          chapter: newChapter || previousBible.maxChapter,
+        },
+      }
+    }),
   set: (input: BibleSearchParam) =>
     set(() => ({
       searchParam: input,
@@ -82,14 +75,5 @@ const useBibleSearchParams = create<Store>((set: any) => ({
       },
     })),
 }))
-// use case
-// function BibleSearchParams() {
-//   const { searchParam, set } = useStore()
-//   return (
-//     <div>
-//       <span>{count}</span>
-//       <button onClick={inc}>one up</button>
-//     </div>
-//   )
-// }
+
 export default useBibleSearchParams
