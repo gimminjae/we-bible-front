@@ -153,24 +153,24 @@ const kjvBibleInfo = [
   { bookName: "susanna", bookSeq: 80 },
 ]
 interface BibleInfo {
-  book: string
+  bookCode: string
   chapter: number
-  locale?: string
+  lang?: string
 }
 const bibleService = {
   async getBible(params: BibleInfo) {
-    if (params.locale === "ko" || params.locale === null) {
-      const bookName = bibleInfos[Number(params.book)].bookName
+    if (params.lang === "ko" || params.lang === null) {
+      // const bookName = bibleInfos[Number(params.bookCode)].bookName
       return api.get(
-        `https://webible.s3.ap-northeast-2.amazonaws.com/bible/${bookName}/${params.chapter}.json`
+        `https://webible.s3.ap-northeast-2.amazonaws.com/bible/${params.bookCode}/${params.chapter}.json`
       ) //.then((response) => response.json())
       // console.log("result: ", result)
       // return result
       // return api.get(`/bible/${bookName}/${params.chapter}.json`)
     } else {
-      const bookName = kjvBibleInfo[Number(params.book)].bookName
+      // const bookName = kjvBibleInfo[Number(params.bookCode)].bookName
       return api.get(
-        `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/en-kjv/books/${bookName}/chapters/${params.chapter}.json`
+        `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/en-kjv/books/${params.bookCode}/chapters/${params.chapter}.json`
       )
     }
   },

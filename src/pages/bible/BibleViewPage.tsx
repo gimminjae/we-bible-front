@@ -1,9 +1,13 @@
-import React, {useEffect, useMemo, useState} from "react"
+import React, { useEffect, useState } from "react"
 import bibleService from "../../api/bible"
 import useApi from "../../hooks/useApi"
-import { Button } from "@mui/material"
-import useHeader from "../../hooks/useHeader";
-import BibleViewPageHeader from "../../components/bible/BibleViewPageHeader";
+import useHeader from "../../hooks/useHeader"
+import {
+  BibleNavigationBtns,
+  BibleVerseList,
+  BibleViewPageHeader,
+} from "../../components/bible"
+import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 
 function BibleViewPage() {
   const { setMenu } = useHeader()
@@ -24,34 +28,23 @@ function BibleViewPage() {
     onComplete: () => console.log("complete"),
   })
 
-  const [bibles, setBibles] = useState<any[]>()
+  const { searchParam } = useBibleSearchParams()
+
+  const [bibles, setBibles] = useState<any[]>([])
 
   useEffect(() => {
-    setMenu(<BibleViewPageHeader/>)
+    setMenu(<BibleViewPageHeader />)
+    getBible(searchParam)
   }, [])
+
   useEffect(() => {
-    console.log(bibles)
-  }, [bibles])
+    getBible(searchParam)
+  }, [searchParam])
+
   return (
     <>
-      <div>bible view page</div>
-      <div className="flex gap-3">
-        <Button onClick={() => getBible({ book: 1, chapter: 1, locale: "en" })}>
-          en
-        </Button>
-        <Button onClick={() => getBible({ book: 1, chapter: 1, locale: "ko" })}>
-          ko
-        </Button>
-      </div>
-      <ol>
-        {bibles &&
-          bibles.length > 0 &&
-          bibles.map((bible: any) => (
-            <li>
-              {bible.verse} {bible.content}
-            </li>
-          ))}
-      </ol>
+      <BibleVerseList bibles={bibles} />
+      <BibleNavigationBtns />
     </>
   )
 }
