@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react"
-import { setCookie } from "../../util/cookie"
-import { LangSelect } from "."
+import React, { useMemo, useState } from "react"
 import Box from "@mui/material/Box"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import Button from "@mui/material/Button"
@@ -12,17 +10,12 @@ import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
 import InboxIcon from "@mui/icons-material/MoveToInbox"
 import MailIcon from "@mui/icons-material/Mail"
+import useBibleSearchParams from "../store/zustand/BibleSearchParams"
 import { ButtonGroup } from "@mui/material"
-import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 
-interface Props {
-  selectedLang: "ko" | "en"
-  onLangChange: any
-  book?: string
-  chapter?: number
-}
-function BibleViewPageHeader() {
-  const { searchParam } = useBibleSearchParams()
+type Anchor = "top" | "left" | "bottom" | "right"
+
+const SwipeableTemporaryDrawer = () => {
   const [state, setState] = useState({
     top: false,
     left: false,
@@ -30,8 +23,10 @@ function BibleViewPageHeader() {
     right: false,
   })
 
+  const { searchParam } = useBibleSearchParams()
+
   const toggleDrawer =
-    (anchor: string, open: boolean) =>
+    (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
         event &&
@@ -45,7 +40,7 @@ function BibleViewPageHeader() {
       setState({ ...state, [anchor]: open })
     }
 
-  const list = (anchor: string) => (
+  const list = (anchor: Anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
@@ -79,13 +74,9 @@ function BibleViewPageHeader() {
       </List>
     </Box>
   )
-  useEffect(() => {
-    setCookie("bibleSearchParam", JSON.stringify(searchParam))
-  }, [searchParam])
-
-  return (
-    <>
-      <div className="flex justify-between m-2">
+  const SwipeableTemporaryDrawerUI = useMemo(
+    () => (
+      <div>
         <ButtonGroup
           sx={{ m: 1, minWidth: 120 }}
           size="small"
@@ -93,25 +84,39 @@ function BibleViewPageHeader() {
           // variant="contained"
           aria-label="Disabled button group"
         >
-          <Button onClick={toggleDrawer("bottom", true)}>
+          <Button
+            onClick={() => {
+              console.log('toggleDrawer("bottom", true)')
+              toggleDrawer("bottom", true)
+            }}
+          >
             {searchParam.bookCode}
           </Button>
-          <SwipeableDrawer
-            anchor={"bottom"}
-            open={state["bottom"]}
-            onClose={toggleDrawer("bottom", false)}
-            onOpen={toggleDrawer("bottom", true)}
-          >
-            {list("bottom")}
-          </SwipeableDrawer>
-          <Button onClick={toggleDrawer("bottom", true)}>
+          <Button onClick={() => toggleDrawer("bottom", true)}>
             {searchParam.chapter}
           </Button>
         </ButtonGroup>
-        <LangSelect />
+        {(["left", "right", "top", "bottom"] as const).map((anchor) => (
+          <React.Fragment key={anchor}>
+            <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+            <SwipeableDrawer
+              anchor={anchor}
+              open={state[anchor]}
+              onClose={toggleDrawer(anchor, false)}
+              onOpen={toggleDrawer(anchor, true)}
+            >
+              {list(anchor)}
+            </SwipeableDrawer>
+          </React.Fragment>
+        ))}
       </div>
-    </>
+    ),
+    [state]
   )
-}
 
-export default React.memo(BibleViewPageHeader)
+  return {
+    SwipeableTemporaryDrawerUI,
+    toggleDrawer,
+  }
+}
+export default SwipeableTemporaryDrawer
