@@ -17,7 +17,7 @@ function LangSelect() {
   }
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+    <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
       <InputLabel id="demo-select-small-label">Language</InputLabel>
       <Select
         labelId="demo-select-small-label"
@@ -26,9 +26,6 @@ function LangSelect() {
         label="Language"
         onChange={handleChange}
       >
-        {/* <MenuItem value="">
-          <em>None</em>
-        </MenuItem> */}
         <MenuItem value="ko">한국어</MenuItem>
         <MenuItem value="en">English</MenuItem>
       </Select>

@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material"
-import RestoreIcon from "@mui/icons-material/Restore"
+import SettingsIcon from "@mui/icons-material/Settings"
 import FavoriteIcon from "@mui/icons-material/Favorite"
-import ArchiveIcon from "@mui/icons-material/Archive"
+import AutoStoriesIcon from "@mui/icons-material/AutoStories"
 
 function footer() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -20,9 +20,9 @@ function footer() {
             setValue(newValue)
           }}
         >
-          <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+          <BottomNavigationAction label="Bible" icon={<AutoStoriesIcon />} />
           <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-          <BottomNavigationAction label="Archive" icon={<ArchiveIcon />} />
+          <BottomNavigationAction label="Archive" icon={<SettingsIcon />} />
         </BottomNavigation>
       </Paper>
     </>

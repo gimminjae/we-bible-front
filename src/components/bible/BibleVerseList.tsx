@@ -9,8 +9,8 @@ function BibleVerseList({ bibles }: Props) {
     <ol className="space-y-2">
       {bibles &&
         bibles.length > 0 &&
-        bibles.map((bible: any) => (
-          <BibleVerse verse={bible.verse} content={bible.content} />
+        bibles.map((bible: any, idx) => (
+          <BibleVerse verse={bible.verse} key={idx} content={bible.content} />
         ))}
     </ol>
   )

@@ -7,8 +7,8 @@ function RootRouter() {
 
   return (
     <Routes>
-      {RouterPages.map((page) => (
-        <Route path={page.path} element={page.page} />
+      {RouterPages.map((page, idx) => (
+        <Route path={page.path} key={idx} element={page.page} />
       ))}
     </Routes>
   )

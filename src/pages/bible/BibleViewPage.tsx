@@ -41,6 +41,8 @@ function BibleViewPage() {
     getBible(searchParam)
   }, [searchParam])
 
+  useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), [bibles])
+
   return (
     <>
       <div className="m-5">
