@@ -43,8 +43,10 @@ function BibleViewPage() {
 
   return (
     <>
-      <BibleVerseList bibles={bibles} />
-      <BibleNavigationBtns />
+      <div className="m-5">
+        <BibleVerseList bibles={bibles} />
+        <BibleNavigationBtns />
+      </div>
     </>
   )
 }

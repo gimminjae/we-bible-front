@@ -6,8 +6,9 @@ interface Props {
 }
 function BibleVerse({ verse, content }: Props) {
   return (
-    <li>
-      {verse} {content}
+    <li className="flex gap-3">
+      <span>{verse}</span>
+      <p>{content}</p>
     </li>
   )
 }

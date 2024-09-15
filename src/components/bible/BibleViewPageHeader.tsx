@@ -14,6 +14,7 @@ import InboxIcon from "@mui/icons-material/MoveToInbox"
 import MailIcon from "@mui/icons-material/Mail"
 import { ButtonGroup } from "@mui/material"
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
+import { getBookName } from "../../api/bible"
 
 interface Props {
   selectedLang: "ko" | "en"
@@ -94,7 +95,7 @@ function BibleViewPageHeader() {
           aria-label="Disabled button group"
         >
           <Button onClick={toggleDrawer("bottom", true)}>
-            {searchParam.bookCode}
+            {getBookName(searchParam.bookCode, searchParam.lang)}
           </Button>
           <SwipeableDrawer
             anchor={"bottom"}
