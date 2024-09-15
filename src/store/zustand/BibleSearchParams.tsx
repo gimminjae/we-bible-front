@@ -1,5 +1,6 @@
 import { create } from "zustand"
 import { getCookie } from "../../util/cookie"
+import { bibleInfos } from "../../api/bible"
 
 type BibleSearchParam = {
   bookCode: string
@@ -20,22 +21,53 @@ const initialValue = {
   lang: "ko",
 }
 
+const getPreviousBookCode = (bookCode: string) => {
+  const presentBibleIndex = bibleInfos.findIndex(
+    (bible) => bible.bookCode === bookCode
+  )
+  const bible = bibleInfos[presentBibleIndex - 1]
+  return bible
+}
+const getNextBookCode = (bookCode: string) => {
+  const presentBibleIndex = bibleInfos.findIndex(
+    (bible) => bible.bookCode === bookCode
+  )
+  const bible = bibleInfos[presentBibleIndex + 1]
+  return bible
+}
+
 const bibleSearchParamFromCookie = getCookie("bibleSearchParam")
 
 const useBibleSearchParams = create<Store>((set: any) => ({
   searchParam: bibleSearchParamFromCookie || initialValue,
   next: () =>
-    set(({ searchParam: state }: { searchParam: BibleSearchParam }) => ({
-      searchParam: {
-        ...state,
-        chapter: state.chapter + 1,
-      },
-    })),
+    set(({ searchParam: state }: { searchParam: BibleSearchParam }) => {
+      const bible = bibleInfos.find((info) => info.bookCode === state.bookCode)
+      const newChapter = state.chapter + 1
+      return (bible?.maxChapter || 0) < newChapter
+        ? {
+            searchParam: {
+              ...state,
+              bookCode: getNextBookCode(state.bookCode).bookCode,
+              chapter: 1,
+            },
+          }
+        : {
+            searchParam: {
+              ...state,
+              chapter: newChapter,
+            },
+          }
+    }),
   previous: () =>
     set(({ searchParam: state }: { searchParam: BibleSearchParam }) => ({
       searchParam: {
         ...state,
-        chapter: state.chapter - 1,
+        bookCode: !(state.chapter - 1)
+          ? getPreviousBookCode(state.bookCode).bookCode
+          : state.bookCode,
+        chapter:
+          state.chapter - 1 || getPreviousBookCode(state.bookCode).maxChapter,
       },
     })),
   set: (input: BibleSearchParam) =>
