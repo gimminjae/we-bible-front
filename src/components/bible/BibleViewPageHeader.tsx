@@ -20,12 +20,12 @@ interface Props {
   chapter?: number
 }
 function BibleViewPageHeader() {
-  const { searchParam } = useBibleSearchParams()
+  const { searchParam, changeLang } = useBibleSearchParams()
   const [state, setState] = useState({
-    top: false,
-    left: false,
     bottom: false,
-    right: false,
+  })
+  const [langState, setLangState] = useState({
+    bottom: false,
   })
 
   const toggleDrawer =
@@ -40,12 +40,27 @@ function BibleViewPageHeader() {
         return
       }
 
-      setState({ ...state, [anchor]: open })
+      setState((prev) => ({ ...prev, [anchor]: open }))
+    }
+  const toggleDrawerLang =
+    (anchor: string, open: boolean, lang?: string) =>
+    (event: React.KeyboardEvent | React.MouseEvent) => {
+      changeLang(lang)
+      if (
+        event &&
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return
+      }
+
+      setLangState((prev) => ({ ...prev, [anchor]: open }))
     }
 
   const list = (anchor: string) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      sx={{ width: anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
       onKeyDown={toggleDrawer(anchor, false)}
     >
@@ -74,6 +89,39 @@ function BibleViewPageHeader() {
       </List>
     </Box>
   )
+  const langList = () => (
+    <Box
+      sx={{ width: "auto" }}
+      role="presentation"
+      onKeyDown={toggleDrawerLang("bottom", false)}
+    >
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemText
+              onClick={toggleDrawerLang("bottom", false)}
+              className="text-center"
+            >
+              <CancelIcon />
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
+        {[
+          { txt: "한국어", val: "ko" },
+          { txt: "English", val: "en" },
+        ].map((el, idx) => (
+          <ListItem key={idx} disablePadding>
+            <ListItemButton>
+              <ListItemText
+                onClick={toggleDrawerLang("bottom", false, el.val)}
+                primary={el.txt}
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  )
   useEffect(() => {
     setCookie("bibleSearchParam", JSON.stringify(searchParam))
   }, [searchParam])
@@ -89,21 +137,32 @@ function BibleViewPageHeader() {
           aria-label="Disabled button group"
         >
           <Button onClick={toggleDrawer("bottom", true)}>
-            {getBookName(searchParam.bookCode, searchParam.lang)}
+            {`${getBookName(searchParam.bookCode, searchParam.lang)} ${
+              searchParam.chapter
+            }`}
           </Button>
           <SwipeableDrawer
+            id="bible"
             anchor={"bottom"}
-            open={state["bottom"]}
+            open={state.bottom}
             onClose={toggleDrawer("bottom", false)}
             onOpen={toggleDrawer("bottom", true)}
           >
             {list("bottom")}
           </SwipeableDrawer>
-          <Button onClick={toggleDrawer("bottom", true)}>
-            {searchParam.chapter}
+          <SwipeableDrawer
+            id="lang"
+            anchor={"bottom"}
+            open={langState.bottom}
+            onClose={toggleDrawerLang("bottom", false)}
+            onOpen={toggleDrawerLang("bottom", true)}
+          >
+            {langList()}
+          </SwipeableDrawer>
+          <Button onClick={toggleDrawerLang("bottom", true)}>
+            {searchParam.lang}
           </Button>
         </ButtonGroup>
-        <LangSelect />
       </div>
     </>
   )

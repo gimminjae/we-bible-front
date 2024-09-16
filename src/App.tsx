@@ -12,7 +12,7 @@ function App() {
     <>
       <CookiesProvider>
         <HeaderContext.Provider value={{ header, setHeader }}>
-          <Header className="relative h-[8vh]" />
+          <Header className="relative h-[7vh]" />
           <div className="mt-[9vh] container mx-auto my-auto">
             <Router />
           </div>
