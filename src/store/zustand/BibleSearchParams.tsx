@@ -6,6 +6,7 @@ type BibleSearchParam = {
   bookCode: string
   chapter: number
   lang: "ko" | "en" | string
+  fontSize: number
 }
 type Store = {
   searchParam: BibleSearchParam
@@ -13,12 +14,14 @@ type Store = {
   next: any
   previous: any
   changeLang: any
+  changeFontSize: any
 }
 
 const initialValue = {
   bookCode: "genesis",
   chapter: 1,
   lang: "ko",
+  fontSize: 20,
 }
 
 const getPreviousBookCode = (bookCode: string) =>
@@ -76,6 +79,13 @@ const useBibleSearchParams = create<Store>((set: any) => ({
       searchParam: {
         ...state,
         lang,
+      },
+    })),
+  changeFontSize: (size: number) =>
+    set(({ searchParam: state }: { searchParam: BibleSearchParam }) => ({
+      searchParam: {
+        ...state,
+        fontSize: size,
       },
     })),
 }))

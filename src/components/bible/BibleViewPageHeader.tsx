@@ -16,6 +16,7 @@ import {
   ButtonGroup,
   Grid,
   Paper,
+  Slider,
   styled,
 } from "@mui/material"
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
@@ -31,12 +32,16 @@ interface Props {
   chapter?: number
 }
 function BibleViewPageHeader() {
-  const { searchParam, changeLang, set } = useBibleSearchParams()
+  const { searchParam, changeLang, set, changeFontSize } =
+    useBibleSearchParams()
   const [state, setState] = useState({
     bottom: false,
   })
   const [langState, setLangState] = useState({
     bottom: false,
+  })
+  const [fontState, setFontState] = useState({
+    right: false,
   })
 
   const toggleDrawer =
@@ -53,6 +58,21 @@ function BibleViewPageHeader() {
       }
 
       setState((prev) => ({ ...prev, [anchor]: open }))
+    }
+  const toggleDrawerFontSize =
+    (anchor: string, open: boolean, bookCode?: string, chapter?: number) =>
+    (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (bookCode && chapter) set(bookCode, chapter)
+      if (
+        event &&
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return
+      }
+
+      setFontState((prev) => ({ ...prev, [anchor]: open }))
     }
   const toggleDrawerLang =
     (anchor: string, open: boolean, lang?: string) =>
@@ -104,7 +124,7 @@ function BibleViewPageHeader() {
         {bibleInfos.map(
           (info, index) =>
             index > 0 && (
-              <Accordion key={index}>
+              <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1-content"
@@ -185,6 +205,41 @@ function BibleViewPageHeader() {
     ),
     []
   )
+  function valuetext(value: number) {
+    return `${value}`
+  }
+  const fontSize = useCallback(
+    (anchor: string) => (
+      <Box
+        sx={{ width: "auto" }}
+        onKeyDown={toggleDrawerFontSize(anchor, false)}
+      >
+        <ListItemButton>
+          <ListItemText
+            onClick={toggleDrawerFontSize("bottom", false)}
+            className="text-center"
+          >
+            <CancelIcon />
+          </ListItemText>
+        </ListItemButton>
+        <Slider
+          className="my-10"
+          aria-label="Temperature"
+          // defaultValue={30}
+          getAriaValueText={valuetext}
+          valueLabelDisplay="on"
+          shiftStep={30}
+          step={5}
+          marks
+          value={searchParam.fontSize}
+          onChange={(e: any) => changeFontSize(e?.target?.value)}
+          min={10}
+          max={50}
+        />
+      </Box>
+    ),
+    [searchParam.fontSize]
+  )
 
   useEffect(() => {
     setCookie("bibleSearchParam", JSON.stringify(searchParam))
@@ -227,6 +282,24 @@ function BibleViewPageHeader() {
             {searchParam.lang}
           </Button>
         </ButtonGroup>
+        <ButtonGroup>
+          <Button
+            sx={{ m: 1, minWidth: 120 }}
+            size="small"
+            onClick={toggleDrawerFontSize("right", true)}
+          >
+            abc
+          </Button>
+        </ButtonGroup>
+        <SwipeableDrawer
+          id="lang"
+          anchor={"bottom"}
+          open={fontState.right}
+          onClose={toggleDrawerFontSize("right", false)}
+          onOpen={toggleDrawerFontSize("right", true)}
+        >
+          {fontSize("right")}
+        </SwipeableDrawer>
       </div>
     </>
   )
