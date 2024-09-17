@@ -3,10 +3,13 @@ import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material"
 import SettingsIcon from "@mui/icons-material/Settings"
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import AutoStoriesIcon from "@mui/icons-material/AutoStories"
+import { useNavigate } from "react-router-dom"
 
 function footer() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [value, setValue] = useState(0)
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const navigate = useNavigate()
   return (
     <>
       <Paper
@@ -20,9 +23,21 @@ function footer() {
             setValue(newValue)
           }}
         >
-          <BottomNavigationAction label="Bible" icon={<AutoStoriesIcon />} />
-          <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-          <BottomNavigationAction label="Archive" icon={<SettingsIcon />} />
+          <BottomNavigationAction
+            onClick={() => navigate("/bible-page")}
+            label="Bible"
+            icon={<AutoStoriesIcon />}
+          />
+          <BottomNavigationAction
+            onClick={() => navigate("/my-page")}
+            label="Favorites"
+            icon={<FavoriteIcon />}
+          />
+          <BottomNavigationAction
+            onClick={() => navigate("/setting-page")}
+            label="Archive"
+            icon={<SettingsIcon />}
+          />
         </BottomNavigation>
       </Paper>
     </>
