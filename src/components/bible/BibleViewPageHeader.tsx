@@ -104,7 +104,7 @@ function BibleViewPageHeader() {
         {bibleInfos.map(
           (info, index) =>
             index > 0 && (
-              <Accordion>
+              <Accordion key={index}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1-content"
