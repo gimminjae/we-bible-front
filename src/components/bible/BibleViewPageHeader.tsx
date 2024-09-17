@@ -317,31 +317,33 @@ function BibleViewPageHeader() {
   const fontSize = useCallback(
     (anchor: string) => (
       <Box
-        sx={{ width: "auto" }}
+        sx={{ width: "auto", display: "flex", justifyContent: "center" }}
         onKeyDown={toggleDrawerFontSize(anchor, false)}
       >
-        <ListItemButton>
+        {/* <ListItemButton>
           <ListItemText
             onClick={toggleDrawerFontSize("bottom", false)}
             className="text-center"
           >
             <CancelIcon />
           </ListItemText>
-        </ListItemButton>
-        <Slider
-          className="my-10"
-          aria-label="Temperature"
-          // defaultValue={30}
-          getAriaValueText={valuetext}
-          valueLabelDisplay="on"
-          shiftStep={30}
-          step={5}
-          marks
-          value={searchParam.fontSize}
-          onChange={(e: any) => changeFontSize(e?.target?.value)}
-          min={10}
-          max={50}
-        />
+        </ListItemButton> */}
+        <div className="w-[90%]">
+          <Slider
+            className="my-10"
+            aria-label="Temperature"
+            // defaultValue={30}
+            getAriaValueText={valuetext}
+            valueLabelDisplay="on"
+            shiftStep={30}
+            step={5}
+            marks
+            value={searchParam.fontSize}
+            onChange={(e: any) => changeFontSize(e?.target?.value)}
+            min={10}
+            max={50}
+          />
+        </div>
       </Box>
     ),
     [searchParam.fontSize]
