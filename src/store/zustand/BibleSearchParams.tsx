@@ -63,9 +63,13 @@ const useBibleSearchParams = create<Store>((set: any) => ({
         },
       }
     }),
-  set: (input: BibleSearchParam) =>
-    set(() => ({
-      searchParam: input,
+  set: (bookCode: string, chapter: number) =>
+    set(({ searchParam: state }: { searchParam: BibleSearchParam }) => ({
+      searchParam: {
+        ...state,
+        bookCode,
+        chapter,
+      },
     })),
   changeLang: (lang: string) =>
     set(({ searchParam: state }: { searchParam: BibleSearchParam }) => ({

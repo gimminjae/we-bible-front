@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { setCookie } from "../../util/cookie"
 import { LangSelect } from "."
 import Box from "@mui/material/Box"
@@ -8,10 +8,21 @@ import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemButton from "@mui/material/ListItemButton"
 import ListItemText from "@mui/material/ListItemText"
-import { ButtonGroup, Grid, Paper, styled } from "@mui/material"
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Badge,
+  ButtonGroup,
+  Grid,
+  Paper,
+  styled,
+} from "@mui/material"
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 import { bibleInfos, getBookName } from "../../api/bible"
 import CancelIcon from "@mui/icons-material/Cancel"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import { BorderColor } from "@mui/icons-material"
 
 interface Props {
   selectedLang: "ko" | "en"
@@ -20,22 +31,18 @@ interface Props {
   chapter?: number
 }
 function BibleViewPageHeader() {
-  const { searchParam, changeLang } = useBibleSearchParams()
+  const { searchParam, changeLang, set } = useBibleSearchParams()
   const [state, setState] = useState({
     bottom: false,
   })
   const [langState, setLangState] = useState({
     bottom: false,
   })
-  const [newSearchParam, setNewSearchParam] = useState({
-    bookCode: "",
-    chapter: 0,
-  })
 
   const toggleDrawer =
-    (anchor: string, open: boolean) =>
+    (anchor: string, open: boolean, bookCode?: string, chapter?: number) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (open) setNewSearchParam({ bookCode: "", chapter: 0 })
+      if (bookCode && chapter) set(bookCode, chapter)
       if (
         event &&
         event.type === "keydown" &&
@@ -50,7 +57,7 @@ function BibleViewPageHeader() {
   const toggleDrawerLang =
     (anchor: string, open: boolean, lang?: string) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
-      changeLang(lang)
+      if (lang) changeLang(lang)
       if (
         event &&
         event.type === "keydown" &&
@@ -63,103 +70,122 @@ function BibleViewPageHeader() {
       setLangState((prev) => ({ ...prev, [anchor]: open }))
     }
 
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-    ...theme.applyStyles("dark", {
-      backgroundColor: "#1A2027",
-    }),
-  }))
+  const rectangle = useCallback(
+    (text: any) => (
+      <Box
+        component="button"
+        sx={{
+          bgcolor: "info.main",
+          width: 40,
+          height: 40,
+          borderRadius: "10%",
+        }}
+        className="text-center"
+      >
+        {text}
+      </Box>
+    ),
+    []
+  )
 
-  const list = (anchor: string) => (
-    <Box
-      sx={{ width: anchor === "bottom" ? "auto" : 250 }}
-      role="presentation"
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-      {!newSearchParam.bookCode && (
+  const list = useCallback(
+    (anchor: string) => (
+      <Box
+        sx={{ width: anchor === "bottom" ? "auto" : 250 }}
+        role="presentation"
+        onKeyDown={toggleDrawer(anchor, false)}
+      >
+        <ListItemText
+          onClick={toggleDrawer(anchor, false)}
+          className="text-center"
+        >
+          <CancelIcon />
+        </ListItemText>
+        {bibleInfos.map(
+          (info, index) =>
+            index > 0 && (
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1-content"
+                  id="panel1-header"
+                >
+                  {getBookName(info.bookCode, searchParam.lang)}
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Grid
+                    container
+                    direction="row"
+                    sx={{
+                      // justifyContent: "space-around",
+                      alignItems: "flex-start",
+                    }}
+                    spacing={2}
+                    wrap="wrap"
+                  >
+                    {Array.from({ length: 38 }, (_, i) => i + 1).map(
+                      (el, index) => (
+                        <Grid item key={index} xs>
+                          <Badge
+                            color="secondary"
+                            onClick={toggleDrawer(
+                              "bottom",
+                              false,
+                              info.bookCode,
+                              el
+                            )}
+                          >
+                            {rectangle(el)}
+                          </Badge>
+                        </Grid>
+                      )
+                    )}
+                  </Grid>
+                </AccordionDetails>
+              </Accordion>
+            )
+        )}
+      </Box>
+    ),
+    []
+  )
+  const langList = useCallback(
+    () => (
+      <Box
+        sx={{ width: "auto" }}
+        role="presentation"
+        onKeyDown={toggleDrawerLang("bottom", false)}
+      >
         <List>
-          {bibleInfos?.map((info, index) => (
-            <ListItem key={info.bookCode} disablePadding>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemText
+                onClick={toggleDrawerLang("bottom", false)}
+                className="text-center"
+              >
+                <CancelIcon />
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+          {[
+            { txt: "한국어", val: "ko" },
+            { txt: "English", val: "en" },
+          ].map((el, idx) => (
+            <ListItem key={idx} disablePadding>
               <ListItemButton>
-                {!index ? (
-                  <>
-                    <ListItemText
-                      onClick={toggleDrawer(anchor, false)}
-                      className="text-center"
-                    >
-                      <CancelIcon />
-                    </ListItemText>
-                  </>
-                ) : (
-                  <ListItemText
-                    onClick={() =>
-                      setNewSearchParam((prev) => ({
-                        ...prev,
-                        bookCode: info.bookCode,
-                      }))
-                    }
-                    primary={getBookName(info.bookCode, searchParam.lang)}
-                  />
-                )}
+                <ListItemText
+                  onClick={toggleDrawerLang("bottom", false, el.val)}
+                  primary={el.txt}
+                />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
-      )}
-      {newSearchParam.bookCode && (
-        <Grid container spacing={1}>
-          {Array.from(
-            {
-              length:
-                bibleInfos.find(
-                  (info) => info.bookCode === newSearchParam.bookCode
-                )?.maxChapter || 0,
-            },
-            (_, i) => i + 1
-          ).map((val, idx) => (
-            <Item key={idx}>{val}</Item>
-          ))}
-        </Grid>
-      )}
-    </Box>
+      </Box>
+    ),
+    []
   )
-  const langList = () => (
-    <Box
-      sx={{ width: "auto" }}
-      role="presentation"
-      onKeyDown={toggleDrawerLang("bottom", false)}
-    >
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemText
-              onClick={toggleDrawerLang("bottom", false)}
-              className="text-center"
-            >
-              <CancelIcon />
-            </ListItemText>
-          </ListItemButton>
-        </ListItem>
-        {[
-          { txt: "한국어", val: "ko" },
-          { txt: "English", val: "en" },
-        ].map((el, idx) => (
-          <ListItem key={idx} disablePadding>
-            <ListItemButton>
-              <ListItemText
-                onClick={toggleDrawerLang("bottom", false, el.val)}
-                primary={el.txt}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  )
+
   useEffect(() => {
     setCookie("bibleSearchParam", JSON.stringify(searchParam))
   }, [searchParam])
