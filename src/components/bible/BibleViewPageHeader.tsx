@@ -12,19 +12,56 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  AppBar,
   Badge,
   ButtonGroup,
   Grid,
   Paper,
   Slider,
   styled,
+  Tab,
+  Tabs,
+  Typography,
 } from "@mui/material"
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 import { bibleInfos, getBookName } from "../../api/bible"
 import CancelIcon from "@mui/icons-material/Cancel"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import { BorderColor } from "@mui/icons-material"
+import { useTheme } from "@mui/material/styles"
 
+interface TabPanelProps {
+  children?: React.ReactNode
+  dir?: string
+  index: number
+  value: number
+}
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  )
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `full-width-tab-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
+  }
+}
 interface Props {
   selectedLang: "ko" | "en"
   onLangChange: any
@@ -107,6 +144,12 @@ function BibleViewPageHeader() {
     ),
     []
   )
+  const theme = useTheme()
+  const [value, setValue] = React.useState(0)
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue)
+  }
 
   const list = useCallback(
     (anchor: string) => (
@@ -121,54 +164,116 @@ function BibleViewPageHeader() {
         >
           <CancelIcon />
         </ListItemText>
-        {bibleInfos.map(
-          (info, index) =>
-            index > 0 && (
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1-content"
-                  id="panel1-header"
-                >
-                  {getBookName(info.bookCode, searchParam.lang)}
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Grid
-                    container
-                    direction="row"
-                    sx={{
-                      // justifyContent: "space-around",
-                      alignItems: "flex-start",
-                    }}
-                    spacing={2}
-                    wrap="wrap"
+        <AppBar position="static">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="inherit"
+            variant="fullWidth"
+            aria-label="full width tabs example"
+          >
+            <Tab label="구약" {...a11yProps(0)} />
+            <Tab label="신약" {...a11yProps(1)} />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={value} index={0} dir={theme.direction}>
+          {bibleInfos.slice(0, 40).map(
+            (info, index) =>
+              index > 0 && (
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
                   >
-                    {Array.from(
-                      { length: info.maxChapter },
-                      (_, i) => i + 1
-                    ).map((el, index) => (
-                      <Grid item key={index} xs>
-                        <Badge
-                          color="secondary"
-                          onClick={toggleDrawer(
-                            "bottom",
-                            false,
-                            info.bookCode,
-                            el
-                          )}
-                        >
-                          {rectangle(el)}
-                        </Badge>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </AccordionDetails>
-              </Accordion>
-            )
-        )}
+                    {getBookName(info.bookCode, searchParam.lang)}
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Grid
+                      container
+                      direction="row"
+                      sx={{
+                        // justifyContent: "space-around",
+                        alignItems: "flex-start",
+                      }}
+                      spacing={2}
+                      wrap="wrap"
+                    >
+                      {Array.from(
+                        { length: info.maxChapter },
+                        (_, i) => i + 1
+                      ).map((el, index) => (
+                        <Grid item key={index} xs>
+                          <Badge
+                            color="secondary"
+                            onClick={toggleDrawer(
+                              "bottom",
+                              false,
+                              info.bookCode,
+                              el
+                            )}
+                          >
+                            {rectangle(el)}
+                          </Badge>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </AccordionDetails>
+                </Accordion>
+              )
+          )}
+        </TabPanel>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+          {bibleInfos.slice(40).map(
+            (info, index) =>
+              index > 0 && (
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                  >
+                    {getBookName(info.bookCode, searchParam.lang)}
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Grid
+                      container
+                      direction="row"
+                      sx={{
+                        // justifyContent: "space-around",
+                        alignItems: "flex-start",
+                      }}
+                      spacing={2}
+                      wrap="wrap"
+                    >
+                      {Array.from(
+                        { length: info.maxChapter },
+                        (_, i) => i + 1
+                      ).map((el, index) => (
+                        <Grid item key={index} xs>
+                          <Badge
+                            color="secondary"
+                            onClick={toggleDrawer(
+                              "bottom",
+                              false,
+                              info.bookCode,
+                              el
+                            )}
+                          >
+                            {rectangle(el)}
+                          </Badge>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </AccordionDetails>
+                </Accordion>
+              )
+          )}
+        </TabPanel>
       </Box>
     ),
-    []
+    [value]
   )
   const langList = useCallback(
     () => (
