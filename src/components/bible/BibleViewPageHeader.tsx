@@ -247,7 +247,7 @@ function BibleViewPageHeader() {
 
   return (
     <>
-      <div className="flex justify-between m-2">
+      <div className="flex justify-between content-center">
         <ButtonGroup
           sx={{ m: 1, minWidth: 120 }}
           size="small"

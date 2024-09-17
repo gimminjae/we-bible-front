@@ -6,13 +6,13 @@ import Footer from "./components/layouts/Footer"
 import { CookiesProvider } from "react-cookie"
 
 function App() {
-  const [header, setHeader] = useState("initial header")
+  const [header, setHeader] = useState("")
 
   return (
     <>
       <CookiesProvider>
         <HeaderContext.Provider value={{ header, setHeader }}>
-          <Header className="relative h-[7vh]" />
+          <Header className="relative h-[7vh] content-center" />
           <div className="mt-[9vh] container mx-auto my-auto">
             <Router />
           </div>
