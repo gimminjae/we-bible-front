@@ -16,6 +16,7 @@ import {
   Badge,
   ButtonGroup,
   Grid,
+  IconButton,
   Paper,
   Slider,
   styled,
@@ -23,6 +24,7 @@ import {
   Tabs,
   Typography,
 } from "@mui/material"
+import TextFieldsIcon from "@mui/icons-material/TextFields"
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 import { bibleInfos, getBookName } from "../../api/bible"
 import CancelIcon from "@mui/icons-material/Cancel"
@@ -391,13 +393,13 @@ function BibleViewPageHeader() {
           </Button>
         </ButtonGroup>
         <ButtonGroup>
-          <Button
-            sx={{ m: 1, minWidth: 120 }}
-            size="small"
+          <IconButton
             onClick={toggleDrawerFontSize("right", true)}
+            aria-label="delete"
+            size="medium"
           >
-            abc
-          </Button>
+            <TextFieldsIcon fontSize="inherit" />
+          </IconButton>
         </ButtonGroup>
         <SwipeableDrawer
           id="lang"
