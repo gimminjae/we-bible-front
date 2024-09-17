@@ -143,23 +143,24 @@ function BibleViewPageHeader() {
                     spacing={2}
                     wrap="wrap"
                   >
-                    {Array.from({ length: 38 }, (_, i) => i + 1).map(
-                      (el, index) => (
-                        <Grid item key={index} xs>
-                          <Badge
-                            color="secondary"
-                            onClick={toggleDrawer(
-                              "bottom",
-                              false,
-                              info.bookCode,
-                              el
-                            )}
-                          >
-                            {rectangle(el)}
-                          </Badge>
-                        </Grid>
-                      )
-                    )}
+                    {Array.from(
+                      { length: info.maxChapter },
+                      (_, i) => i + 1
+                    ).map((el, index) => (
+                      <Grid item key={index} xs>
+                        <Badge
+                          color="secondary"
+                          onClick={toggleDrawer(
+                            "bottom",
+                            false,
+                            info.bookCode,
+                            el
+                          )}
+                        >
+                          {rectangle(el)}
+                        </Badge>
+                      </Grid>
+                    ))}
                   </Grid>
                 </AccordionDetails>
               </Accordion>

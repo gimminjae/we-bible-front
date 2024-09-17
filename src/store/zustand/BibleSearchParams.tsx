@@ -39,6 +39,10 @@ const useBibleSearchParams = create<Store>((set: any) => ({
     set(({ searchParam: state }: { searchParam: BibleSearchParam }) => {
       const bible = getPresentBible(state.bookCode)
       const newChapter = state.chapter + 1
+      if (bible?.bookSeq === 66 && newChapter === 23)
+        return {
+          searchParam: state,
+        }
       return (bible?.maxChapter || 0) < newChapter
         ? {
             searchParam: {
@@ -58,13 +62,17 @@ const useBibleSearchParams = create<Store>((set: any) => ({
     set(({ searchParam: state }: { searchParam: BibleSearchParam }) => {
       const previousBible = getPreviousBookCode(state.bookCode)
       const newChapter = state.chapter - 1
-      return {
-        searchParam: {
-          ...state,
-          bookCode: !newChapter ? previousBible.bookCode : state.bookCode,
-          chapter: newChapter || previousBible.maxChapter,
-        },
-      }
+      return previousBible?.bookSeq === 0 && newChapter === 0
+        ? {
+            searchParam: state,
+          }
+        : {
+            searchParam: {
+              ...state,
+              bookCode: !newChapter ? previousBible.bookCode : state.bookCode,
+              chapter: newChapter || previousBible.maxChapter,
+            },
+          }
     }),
   set: (bookCode: string, chapter: number) =>
     set(({ searchParam: state }: { searchParam: BibleSearchParam }) => ({
