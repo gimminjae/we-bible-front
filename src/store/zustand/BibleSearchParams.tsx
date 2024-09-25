@@ -36,7 +36,7 @@ const versions = [
       en: "",
       ko: "킹제임스",
     },
-    code: "KJ",
+    code: "KJV",
   },
 ]
 

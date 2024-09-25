@@ -711,6 +711,35 @@ const bibleService = {
       )
     }
   },
+  async getVersions(params: BibleInfo) {
+    return api.get(
+      "https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/bibles.json"
+    )
+    // [
+    //   {
+    //     "id": "fuf-vpfj",
+    //     "version": "Pular Fuuta-Jallon New Testament",
+    //     "description": "Pular: Version Pular Fuuta-Jallon New Testament",
+    //     "scope": "New Testament",
+    //     "language": {
+    //       "name": "Pular",
+    //       "code": "fuf",
+    //       "level": "Common"
+    //     },
+    //     "country": {
+    //       "name": "Guinea",
+    //       "code": "GN"
+    //     },
+    //     "numeralSystem": "Arabic",
+    //     "script": "Latin",
+    //     "archivist": "Melva Wahl",
+    //     "copyright": "",
+    //     "localVersionName": "Version Pular Fuuta-Jallon",
+    //     "localVersionAbbreviation": "VPFJ"
+    //   },
+    // ...
+    // ]
+  },
 }
 
 export default bibleService
