@@ -23,6 +23,22 @@ const initialValue = {
   lang: "ko",
   fontSize: 20,
 }
+const versions = [
+  {
+    name: {
+      en: "",
+      ko: "개역한글",
+    },
+    code: "ko",
+  },
+  {
+    name: {
+      en: "",
+      ko: "킹제임스",
+    },
+    code: "KJ",
+  },
+]
 
 const getPreviousBookCode = (bookCode: string) =>
   bibleInfos[bibleInfos.findIndex((bible) => bible.bookCode === bookCode) - 1]
