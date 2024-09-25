@@ -227,7 +227,7 @@ function BibleViewPageHeader() {
           )}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          {bibleInfos.slice(40).map(
+          {bibleInfos.slice(39).map(
             (info, index) =>
               index > 0 && (
                 <Accordion>
