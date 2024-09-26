@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { setCookie } from "../../util/cookie"
 import { LangSelect } from "."
 import Box from "@mui/material/Box"
@@ -348,6 +348,11 @@ function BibleViewPageHeader() {
     [searchParam.fontSize]
   )
 
+  const displayLang = useMemo(
+    () => versions.find((val) => val?.val === searchParam.lang)?.txt || "",
+    []
+  )
+
   useEffect(() => {
     setCookie("bibleSearchParam", JSON.stringify(searchParam))
   }, [searchParam])
@@ -386,7 +391,7 @@ function BibleViewPageHeader() {
             {langList()}
           </SwipeableDrawer>
           <Button onClick={toggleDrawerLang("bottom", true)}>
-            {versions.find((val) => val.val === searchParam.lang).txt}
+            {displayLang}
           </Button>
         </ButtonGroup>
         <ButtonGroup>
