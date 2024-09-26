@@ -386,7 +386,7 @@ function BibleViewPageHeader() {
             {langList()}
           </SwipeableDrawer>
           <Button onClick={toggleDrawerLang("bottom", true)}>
-            {searchParam.lang}
+            {versions.find((val) => val.val === searchParam.lang).txt}
           </Button>
         </ButtonGroup>
         <ButtonGroup>
