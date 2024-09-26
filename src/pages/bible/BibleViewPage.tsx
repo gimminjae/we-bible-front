@@ -10,12 +10,20 @@ import {
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 
 function BibleViewPage() {
+  const removeDuplicates = (arr: any) => {
+    const seen = new Set()
+    return arr.filter((item: any) => {
+      const duplicate = seen.has(item.verse)
+      seen.add(item.verse)
+      return !duplicate
+    })
+  }
   const { setMenu } = useHeader()
   const { callApi: getBible } = useApi({
     api: bibleService.getBible,
-    onSuccess: async (data: any) => {
+    onSuccess: async (data: any[]) => {
       setBibles(
-        data?.map((i: any) => ({
+        removeDuplicates(data)?.map((i: any) => ({
           ...i,
           bookName: i.book,
           content: i.content || i.text,
