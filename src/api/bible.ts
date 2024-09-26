@@ -957,6 +957,19 @@ export const kjvBibleInfo = [
   { bookName: "songofthethree", bookSeq: 79 },
   { bookName: "susanna", bookSeq: 80 },
 ]
+export const versions = [
+  { txt: "한국어", val: "ko", description: "개역한글" },
+  {
+    txt: "English",
+    val: "en",
+    description: "King James Version of the Holy Bible",
+  },
+  {
+    txt: "German",
+    val: "de",
+    description: "1912 Luther Bible with Strong's numbers",
+  },
+]
 
 export const getBookName = (bookCode: string, lang: string) => {
   const bible: any = bibleInfos.find((info) => info.bookCode === bookCode)
@@ -980,7 +993,10 @@ const bibleService = {
       )
     } else if (params.lang === "de") {
       return api.get(
-        `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/de-luther1912/books/${params.bookCodeByLang.de}/chapters/${params.chapter}.json`
+        `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/de-luther1912/books/${
+          bibleInfos.find((val) => val.bookCode === params.bookCode)
+            ?.bookCodeByLang[params.lang]
+        }/chapters/${params.chapter}.json`
       )
     }
   },

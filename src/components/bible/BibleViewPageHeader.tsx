@@ -26,7 +26,7 @@ import {
 } from "@mui/material"
 import TextFieldsIcon from "@mui/icons-material/TextFields"
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
-import { bibleInfos, getBookName } from "../../api/bible"
+import { bibleInfos, getBookName, versions } from "../../api/bible"
 import CancelIcon from "@mui/icons-material/Cancel"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import { BorderColor } from "@mui/icons-material"
@@ -65,7 +65,7 @@ function a11yProps(index: number) {
   }
 }
 interface Props {
-  selectedLang: "ko" | "en"
+  selectedLang: "ko" | "en" | "de"
   onLangChange: any
   book?: string
   chapter?: number
@@ -295,15 +295,12 @@ function BibleViewPageHeader() {
               </ListItemText>
             </ListItemButton>
           </ListItem>
-          {[
-            { txt: "한국어", val: "ko" },
-            { txt: "English", val: "en" },
-          ].map((el, idx) => (
+          {versions.map((el, idx) => (
             <ListItem key={idx} disablePadding>
               <ListItemButton>
                 <ListItemText
                   onClick={toggleDrawerLang("bottom", false, el.val)}
-                  primary={el.txt}
+                  primary={`${el.txt} (${el.description})`}
                 />
               </ListItemButton>
             </ListItem>
