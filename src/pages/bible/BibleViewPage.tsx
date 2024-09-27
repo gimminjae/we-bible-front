@@ -78,8 +78,12 @@ function BibleViewPage() {
   return (
     <>
       <div className="m-5">
-        <BibleVerseList bibles={bibles} secondBibles={secondBibles} />
-        <BibleNavigationBtns />
+        {bibles && bibles.length > 0 && (
+          <>
+            <BibleVerseList bibles={bibles} secondBibles={secondBibles} />
+            <BibleNavigationBtns />
+          </>
+        )}
       </div>
     </>
   )
