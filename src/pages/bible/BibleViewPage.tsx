@@ -36,9 +36,27 @@ function BibleViewPage() {
     onComplete: () => console.log("complete"),
   })
 
+  const { callApi: getSecondBible } = useApi({
+    api: bibleService.getBible,
+    onSuccess: async (data: any[]) => {
+      setSecondBibles(
+        removeDuplicates(data)?.map((i: any) => ({
+          ...i,
+          bookName: i.book,
+          content: i.content || i.text,
+          chapter: i.chapter,
+          verse: i.verse,
+        })) || []
+      )
+    },
+    onError: (error: any) => console.log(error),
+    onComplete: () => console.log("complete"),
+  })
+
   const { searchParam } = useBibleSearchParams()
 
   const [bibles, setBibles] = useState<any[]>([])
+  const [secondBibles, setSecondBibles] = useState<any[]>([])
 
   useEffect(() => {
     setMenu(<BibleViewPageHeader />)
@@ -47,25 +65,21 @@ function BibleViewPage() {
 
   useEffect(() => {
     getBible(searchParam)
+    if (searchParam.viewMode === "double") {
+      const secondSearchParam = { ...searchParam, lang: searchParam.secondLang }
+      console.log("secondSearchParam: ", secondSearchParam)
+      getSecondBible(secondSearchParam)
+    } else if (searchParam.viewMode === "single") {
+      setSecondBibles([])
+    }
   }, [searchParam])
 
   useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), [bibles])
 
-  const bibleList = useMemo(
-    () =>
-      (searchParam.viewMode === "single" && (
-        <BibleVerseList bibles={bibles} />
-      )) ||
-      (searchParam.viewMode === "double" && <BibleVerseList bibles={bibles} />),
-    [searchParam.viewMode]
-  )
-
   return (
     <>
       <div className="m-5">
-        {searchParam.viewMode === "single" && (
-          <BibleVerseList bibles={bibles} />
-        )}
+        <BibleVerseList bibles={bibles} secondBibles={secondBibles} />
         <BibleNavigationBtns />
       </div>
     </>

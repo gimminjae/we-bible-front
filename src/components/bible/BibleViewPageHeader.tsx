@@ -402,7 +402,7 @@ function BibleViewPageHeader() {
 
   const displayLang = useMemo(
     () => versions.find((val) => val?.val === searchParam.lang)?.txt || "",
-    []
+    [searchParam.lang]
   )
 
   useEffect(() => {
