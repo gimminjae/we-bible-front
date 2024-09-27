@@ -20,39 +20,6 @@ function BibleViewPage() {
     })
   }
   const { setMenu } = useHeader()
-  // const { callApi: getBible } = useApi({
-  //   api: bibleService.getBible,
-  //   onSuccess: async (data: any[]) => {
-  //     setBibles(
-  //       removeDuplicates(data)?.map((i: any) => ({
-  //         ...i,
-  //         bookName: i.book,
-  //         content: i.content || i.text,
-  //         chapter: i.chapter,
-  //         verse: i.verse,
-  //       })) || []
-  //     )
-  //   },
-  //   onError: (error: any) => console.log(error),
-  //   onComplete: () => console.log("complete"),
-  // })
-
-  // const { callApi: getSecondBible } = useApi({
-  //   api: bibleService.getBible,
-  //   onSuccess: async (data: any[]) => {
-  //     setSecondBibles(
-  //       removeDuplicates(data)?.map((i: any) => ({
-  //         ...i,
-  //         bookName: i.book,
-  //         content: i.content || i.text,
-  //         chapter: i.chapter,
-  //         verse: i.verse,
-  //       })) || []
-  //     )
-  //   },
-  //   onError: (error: any) => console.log(error),
-  //   onComplete: () => console.log("complete"),
-  // })
 
   const { searchParam } = useBibleSearchParams()
 
@@ -87,7 +54,6 @@ function BibleViewPage() {
 
   useEffect(() => {
     setMenu(<BibleViewPageHeader />)
-    // getBible(searchParam)
   }, [])
 
   useEffect(() => {
@@ -95,13 +61,6 @@ function BibleViewPage() {
     if (searchParam.viewMode === "double" && searchParam.secondLang) {
       refreshSecondBibles()
     }
-    // getBible(searchParam)
-    // if (searchParam.viewMode === "double") {
-    //   const secondSearchParam = { ...searchParam, lang: searchParam.secondLang }
-    //   getSecondBible(secondSearchParam)
-    // } else if (searchParam.viewMode === "single") {
-    //   setSecondBibles([])
-    // }
   }, [searchParam])
 
   useEffect(() => {
