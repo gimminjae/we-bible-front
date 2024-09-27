@@ -984,19 +984,27 @@ interface BibleInfo {
 const bibleService = {
   async getBible(params: BibleInfo) {
     if (params.lang === "ko" || params.lang === null) {
-      return api.get(
+      return await api.get(
         `https://webible.s3.ap-northeast-2.amazonaws.com/bible/${params.bookCode}/${params.chapter}.json`
       )
     } else if (params.lang === "en") {
-      return api.get(
-        `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/en-kjv/books/${params.bookCode}/chapters/${params.chapter}.json`
+      return (
+        (
+          await api.get(
+            `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/en-kjv/books/${params.bookCode}/chapters/${params.chapter}.json`
+          )
+        )?.data || []
       )
     } else if (params.lang === "de") {
-      return api.get(
-        `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/de-luther1912/books/${
-          bibleInfos.find((val) => val.bookCode === params.bookCode)
-            ?.bookCodeByLang[params.lang]
-        }/chapters/${params.chapter}.json`
+      return (
+        (
+          await api.get(
+            `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/de-luther1912/books/${
+              bibleInfos.find((val) => val.bookCode === params.bookCode)
+                ?.bookCodeByLang[params.lang]
+            }/chapters/${params.chapter}.json`
+          )
+        )?.data || []
       )
     }
   },
@@ -1004,30 +1012,6 @@ const bibleService = {
     return api.get(
       "https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/bibles.json"
     )
-    // [
-    //   {
-    //     "id": "fuf-vpfj",
-    //     "version": "Pular Fuuta-Jallon New Testament",
-    //     "description": "Pular: Version Pular Fuuta-Jallon New Testament",
-    //     "scope": "New Testament",
-    //     "language": {
-    //       "name": "Pular",
-    //       "code": "fuf",
-    //       "level": "Common"
-    //     },
-    //     "country": {
-    //       "name": "Guinea",
-    //       "code": "GN"
-    //     },
-    //     "numeralSystem": "Arabic",
-    //     "script": "Latin",
-    //     "archivist": "Melva Wahl",
-    //     "copyright": "",
-    //     "localVersionName": "Version Pular Fuuta-Jallon",
-    //     "localVersionAbbreviation": "VPFJ"
-    //   },
-    // ...
-    // ]
   },
 }
 

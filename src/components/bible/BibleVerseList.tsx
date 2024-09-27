@@ -13,7 +13,9 @@ function BibleVerseList({ bibles, secondBibles }: Props) {
         bibles.map((bible: any, idx) => (
           <BibleVerse
             verse={bible.verse}
-            secondContent={secondBibles[idx]?.content}
+            secondContent={
+              (secondBibles?.length > 0 && secondBibles[idx]?.content) || ""
+            }
             key={idx}
             content={bible.content}
           />
