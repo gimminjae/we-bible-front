@@ -67,7 +67,6 @@ function BibleViewPage() {
     getBible(searchParam)
     if (searchParam.viewMode === "double") {
       const secondSearchParam = { ...searchParam, lang: searchParam.secondLang }
-      console.log("secondSearchParam: ", secondSearchParam)
       getSecondBible(secondSearchParam)
     } else if (searchParam.viewMode === "single") {
       setSecondBibles([])

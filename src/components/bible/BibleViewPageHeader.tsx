@@ -152,10 +152,12 @@ function BibleViewPageHeader() {
       <Box
         component="button"
         sx={{
-          bgcolor: "info.main",
+          // bgcolor: "info.main",
           width: 40,
           height: 40,
           borderRadius: "10%",
+          outline: "1px solid gray", // 원하는 outline 스타일 지정
+          outlineOffset: "1px",
         }}
         className="text-center"
       >
