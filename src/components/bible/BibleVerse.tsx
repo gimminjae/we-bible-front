@@ -15,7 +15,9 @@ function BibleVerse({ verse, content, secondContent }: Props) {
       <div>
         <p style={{ fontSize }}>{content}</p>
         {secondContent && searchParam.viewMode === "double" && (
-          <p style={{ fontSize }}>{secondContent}</p>
+          <p className="text-gray-400" style={{ fontSize }}>
+            {secondContent}
+          </p>
         )}
       </div>
     </li>
