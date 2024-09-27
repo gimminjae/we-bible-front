@@ -16,5 +16,12 @@ const util = {
   makeSearchParam(object) {
     return object
   },
+  postMessage(type, data) {
+    if (!window.ReactNativeWebView) {
+      // 이 값이 없는 경우 모바일이 아니다.
+      return
+    }
+    window.ReactNativeWebView?.postMessage(JSON.stringify({ type, data }))
+  },
 }
 export default util

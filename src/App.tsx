@@ -7,7 +7,6 @@ import { CookiesProvider } from "react-cookie"
 
 function App() {
   const [header, setHeader] = useState("")
-
   return (
     <>
       <CookiesProvider>
