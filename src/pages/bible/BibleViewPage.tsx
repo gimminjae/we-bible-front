@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import bibleService from "../../api/bible"
 import useApi from "../../hooks/useApi"
 import useHeader from "../../hooks/useHeader"
@@ -51,10 +51,21 @@ function BibleViewPage() {
 
   useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), [bibles])
 
+  const bibleList = useMemo(
+    () =>
+      (searchParam.viewMode === "single" && (
+        <BibleVerseList bibles={bibles} />
+      )) ||
+      (searchParam.viewMode === "double" && <BibleVerseList bibles={bibles} />),
+    [searchParam.viewMode]
+  )
+
   return (
     <>
       <div className="m-5">
-        <BibleVerseList bibles={bibles} />
+        {searchParam.viewMode === "single" && (
+          <BibleVerseList bibles={bibles} />
+        )}
         <BibleNavigationBtns />
       </div>
     </>

@@ -5,8 +5,10 @@ import { bibleInfos } from "../../api/bible"
 type BibleSearchParam = {
   bookCode: string
   chapter: number
-  lang: "ko" | "en" | string
+  lang: "ko" | "en" | "de" | string
+  secondLang: "ko" | "en" | "de" | string
   fontSize: number
+  viewMode: "single" | "double"
 }
 type Store = {
   searchParam: BibleSearchParam
@@ -15,13 +17,17 @@ type Store = {
   previous: any
   changeLang: any
   changeFontSize: any
+  changeViewMode: any
+  changeSecondLang: any
 }
 
 const initialValue = {
   bookCode: "genesis",
   chapter: 1,
   lang: "ko",
+  secondLang: "en",
   fontSize: 20,
+  viewMode: "single",
 }
 
 const getPreviousBookCode = (bookCode: string) =>
@@ -87,6 +93,20 @@ const useBibleSearchParams = create<Store>((set: any) => ({
       searchParam: {
         ...state,
         lang,
+      },
+    })),
+  changeSecondLang: (secondLang: string) =>
+    set(({ searchParam: state }: { searchParam: BibleSearchParam }) => ({
+      searchParam: {
+        ...state,
+        secondLang,
+      },
+    })),
+  changeViewMode: (viewMode: string) =>
+    set(({ searchParam: state }: { searchParam: BibleSearchParam }) => ({
+      searchParam: {
+        ...state,
+        viewMode,
       },
     })),
   changeFontSize: (size: number) =>

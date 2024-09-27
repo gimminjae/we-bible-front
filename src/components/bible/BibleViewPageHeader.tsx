@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 import { setCookie } from "../../util/cookie"
 import { LangSelect } from "."
 import Box from "@mui/material/Box"
@@ -15,11 +21,17 @@ import {
   AppBar,
   Badge,
   ButtonGroup,
+  FormControl,
+  FormControlLabel,
   Grid,
   IconButton,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   Slider,
   styled,
+  Switch,
   Tab,
   Tabs,
   Typography,
@@ -71,8 +83,14 @@ interface Props {
   chapter?: number
 }
 function BibleViewPageHeader() {
-  const { searchParam, changeLang, set, changeFontSize } =
-    useBibleSearchParams()
+  const {
+    searchParam,
+    changeLang,
+    set,
+    changeFontSize,
+    changeViewMode,
+    changeSecondLang,
+  } = useBibleSearchParams()
   const [state, setState] = useState({
     bottom: false,
   })
@@ -275,7 +293,7 @@ function BibleViewPageHeader() {
         </TabPanel>
       </Box>
     ),
-    [value]
+    [value, searchParam.lang]
   )
   const langList = useCallback(
     () => (
@@ -313,20 +331,54 @@ function BibleViewPageHeader() {
   function valuetext(value: number) {
     return `${value}`
   }
+  const handleChangeViewMode = useCallback((e: any) => {
+    const { checked } = e.target
+    changeViewMode(checked ? "double" : "single")
+  }, [])
+
+  const handleChangeSecondLang = useCallback((e: any) => {
+    const { value } = e.target
+    changeSecondLang(value)
+  }, [])
+
   const fontSize = useCallback(
     (anchor: string) => (
       <Box
-        sx={{ width: "auto", display: "flex", justifyContent: "center" }}
+        sx={{
+          width: "auto",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
         onKeyDown={toggleDrawerFontSize(anchor, false)}
       >
-        {/* <ListItemButton>
-          <ListItemText
-            onClick={toggleDrawerFontSize("bottom", false)}
-            className="text-center"
-          >
-            <CancelIcon />
-          </ListItemText>
-        </ListItemButton> */}
+        <div className="w-[90%] mt-10 flex justify-between whitespace-nowrap">
+          <FormControlLabel
+            control={
+              <Switch
+                checked={searchParam.viewMode === "double"}
+                onChange={handleChangeViewMode}
+                name="viewMode"
+              />
+            }
+            label="이중언어모드"
+          />
+          <FormControl>
+            <InputLabel id="demo-simple-select-label">언어</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={searchParam.secondLang}
+              label="secondLang"
+              onChange={handleChangeSecondLang}
+            >
+              {versions.map((version) => (
+                <MenuItem value={version.val}>{version.txt}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
         <div className="w-[90%]">
           <Slider
             className="my-10"
@@ -345,7 +397,7 @@ function BibleViewPageHeader() {
         </div>
       </Box>
     ),
-    [searchParam.fontSize]
+    [searchParam.fontSize, searchParam.viewMode, searchParam.secondLang]
   )
 
   const displayLang = useMemo(
