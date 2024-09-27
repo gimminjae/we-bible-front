@@ -63,10 +63,6 @@ function BibleViewPage() {
     }
   }, [searchParam])
 
-  useEffect(() => {
-    console.log("bibles, secondBibles: ", bibles, secondBibles)
-  }, [bibles, secondBibles])
-
   useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), [bibles])
 
   return (
