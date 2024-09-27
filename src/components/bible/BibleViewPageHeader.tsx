@@ -167,7 +167,7 @@ function BibleViewPageHeader() {
     []
   )
   const theme = useTheme()
-  const [value, setValue] = React.useState(0)
+  const [value, setValue] = useState(0)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
@@ -216,7 +216,7 @@ function BibleViewPageHeader() {
                       container
                       direction="row"
                       sx={{
-                        // justifyContent: "space-around",
+                        justifyContent: "flex-start",
                         alignItems: "flex-start",
                       }}
                       spacing={2}
@@ -226,7 +226,12 @@ function BibleViewPageHeader() {
                         { length: info.maxChapter },
                         (_, i) => i + 1
                       ).map((el, index) => (
-                        <Grid item key={index} xs>
+                        <Grid
+                          item
+                          key={index}
+                          xs
+                          sx={{ displayPrint: "block" }}
+                        >
                           <Badge
                             color="secondary"
                             onClick={toggleDrawer(
