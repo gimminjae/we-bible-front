@@ -1,6 +1,14 @@
+import { useEffect } from "react"
 import plan from "../../domain/plan/plan"
+import useHeader from "../../hooks/useHeader"
 
 function MyViewPage() {
+  const { setMenu } = useHeader()
+
+  useEffect(() => {
+    setMenu(<>마이페이지</>)
+  }, [])
+
   return (
     <>
       <div>
