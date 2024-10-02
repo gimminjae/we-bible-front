@@ -413,7 +413,13 @@ function BibleViewPageHeader() {
   )
 
   useEffect(() => {
-    setCookie("bibleSearchParam", JSON.stringify(searchParam))
+    setCookie(
+      "bibleSearchParam", 
+      JSON.stringify(searchParam)
+      {
+        maxAge: 2592000 // 60 * 60 * 24 * 30 1month 
+      }
+    )
   }, [searchParam])
 
   return (
