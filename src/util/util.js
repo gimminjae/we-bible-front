@@ -23,5 +23,18 @@ const util = {
     }
     window.ReactNativeWebView?.postMessage(JSON.stringify({ type, data }))
   },
+  copyContent(content) {
+    if (!window.ReactNativeWebView) {
+      navigator.clipboard.writeText(content).then(
+        () => console.log("Text copied to clipboard successfully!"),
+        (err) => console.error("Could not copy text: ", err)
+      )
+    } else {
+      this.postMessage("copy", content)
+      // window.ReactNativeWebView?.postMessage(
+      //   JSON.stringify({ type: "copy", data: content })
+      // )
+    }
+  },
 }
 export default util

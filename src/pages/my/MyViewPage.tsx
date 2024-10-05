@@ -1,9 +1,12 @@
-import { useEffect } from "react"
+import { memo, useEffect } from "react"
 import plan from "../../domain/plan/plan"
 import useHeader from "../../hooks/useHeader"
+import util from "../../util/util"
+import useSelectedContent from "../../store/zustand/SelectedContent"
 
 function MyViewPage() {
   const { setMenu } = useHeader()
+  const { content } = useSelectedContent()
 
   useEffect(() => {
     setMenu(<>마이페이지</>)
@@ -26,8 +29,15 @@ function MyViewPage() {
         >
           click
         </button>
+        <button
+          onClick={() => {
+            if (content?.copyText) util.copyContent(content?.copyText)
+          }}
+        >
+          copy
+        </button>
       </div>
     </>
   )
 }
-export default MyViewPage
+export default memo(MyViewPage)

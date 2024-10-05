@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import { memo, useCallback, useEffect, useMemo, useState } from "react"
 import bibleService from "../../api/bible"
-import useApi from "../../hooks/useApi"
 import useHeader from "../../hooks/useHeader"
 import {
   BibleNavigationBtns,
@@ -79,4 +78,4 @@ function BibleViewPage() {
   )
 }
 
-export default BibleViewPage
+export default memo(BibleViewPage)
