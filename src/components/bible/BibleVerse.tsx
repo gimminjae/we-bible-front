@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from "react"
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 import useSelectedContent from "../../store/zustand/SelectedContent"
+import { getBookName } from "../../api/bible"
 
 interface Props {
   verse: number
@@ -11,13 +12,22 @@ function BibleVerse({ verse, content, secondContent }: Props) {
   const { searchParam } = useBibleSearchParams()
   const fontSize = `${searchParam.fontSize}px`
 
-  const { addCopyText } = useSelectedContent()
+  const { content: selectedContent, addCopyText } = useSelectedContent()
 
   const handleClickVerse = useCallback((e: any) => {
     const { id, innerText } = e.target
-    console.log(e)
-    if (id && innerText) addCopyText(`${innerText} ${id}절`)
+    const obj = {
+      verse,
+      content,
+      chapter: searchParam.chapter,
+      bookName: getBookName(searchParam.bookCode, searchParam.lang),
+    }
+    if (id && innerText) addCopyText(obj)
   }, [])
+
+  useEffect(() => {
+    console.log("selectedContent: ", selectedContent)
+  }, [selectedContent])
 
   const idVerse = useMemo(() => verse?.toString() || "", [verse])
 

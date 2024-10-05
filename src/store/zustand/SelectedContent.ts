@@ -17,12 +17,15 @@ const useSelectedContent = create<Store>((set: any) => ({
         },
       }
     }),
-  addCopyText: (text: any) =>
+  addCopyText: (verseObject: any) =>
     set(({ content: state }: { content: any }) => {
       return {
         content: {
           ...state,
-          copyText: (state?.copyText || "") + "\n" + text,
+          copyText:
+            state?.copyText?.length > 0
+              ? [...new Set([...state?.copyText, verseObject])]
+              : [verseObject],
         },
       }
     }),
