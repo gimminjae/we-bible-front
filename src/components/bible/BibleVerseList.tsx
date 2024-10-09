@@ -1,4 +1,4 @@
-import React from "react"
+import { memo } from "react"
 import { BibleVerse } from "."
 
 interface Props {
@@ -24,4 +24,4 @@ function BibleVerseList({ bibles, secondBibles }: Props) {
   )
 }
 
-export default React.memo(BibleVerseList)
+export default memo(BibleVerseList)

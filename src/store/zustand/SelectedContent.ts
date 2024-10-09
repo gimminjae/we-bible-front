@@ -4,6 +4,7 @@ type Store = {
   content: any
   set: any
   addCopyText: any
+  emptyCopyText: any
 }
 
 const useSelectedContent = create<Store>((set: any) => ({
@@ -22,10 +23,22 @@ const useSelectedContent = create<Store>((set: any) => ({
       return {
         content: {
           ...state,
-          copyText:
-            state?.copyText?.length > 0
-              ? [...new Set([...state?.copyText, verseObject])]
-              : [verseObject],
+          copyText: state?.copyText?.some(
+            (val: any) => val?.verse === verseObject?.verse
+          )
+            ? state?.copyText?.filter(
+                (val: any) => val.verse !== verseObject.verse
+              )
+            : [...state?.copyText, verseObject],
+        },
+      }
+    }),
+  emptyCopyText: () =>
+    set(({ content: state }: { content: any }) => {
+      return {
+        content: {
+          ...state,
+          copyText: [],
         },
       }
     }),

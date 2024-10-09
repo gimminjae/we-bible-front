@@ -8,6 +8,7 @@ import {
 } from "../../components/bible"
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 import { useQuery } from "@tanstack/react-query"
+import useSelectedContent from "../../store/zustand/SelectedContent"
 
 function BibleViewPage() {
   const removeDuplicates = (arr: any) => {
@@ -21,6 +22,7 @@ function BibleViewPage() {
   const { setMenu } = useHeader()
 
   const { searchParam } = useBibleSearchParams()
+  const { content: selectedContent, emptyCopyText } = useSelectedContent()
 
   const getBibles = useCallback(
     async (param: any) => {
@@ -60,6 +62,7 @@ function BibleViewPage() {
     if (searchParam.viewMode === "double" && searchParam.secondLang) {
       refreshSecondBibles()
     }
+    emptyCopyText()
   }, [searchParam])
 
   useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), [bibles])

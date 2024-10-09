@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react"
+import { memo, useCallback, useEffect, useMemo } from "react"
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 import useSelectedContent from "../../store/zustand/SelectedContent"
 import { getBookName } from "../../api/bible"
@@ -38,11 +38,24 @@ function BibleVerse({ verse, content, secondContent }: Props) {
     [searchParam.viewMode, secondContent]
   )
 
+  const isSelectedVerse = useMemo(
+    () =>
+      !!selectedContent?.copyText?.some(
+        (content: any) => content.verse === verse
+      ),
+    [selectedContent?.copyText, verse]
+  )
+
   return (
     <li className="flex gap-3">
       <span style={styleMemo}>{verse}</span>
       <div>
-        <p style={styleMemo} id={idVerse} onClick={handleClickVerse}>
+        <p
+          className={`${isSelectedVerse && "dotted-underline"}`}
+          style={styleMemo}
+          id={idVerse}
+          onClick={handleClickVerse}
+        >
           {content}
         </p>
         {isDoubleMode && (
@@ -60,4 +73,4 @@ function BibleVerse({ verse, content, secondContent }: Props) {
   )
 }
 
-export default React.memo(BibleVerse)
+export default memo(BibleVerse)

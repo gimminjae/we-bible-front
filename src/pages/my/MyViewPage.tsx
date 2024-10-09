@@ -3,6 +3,7 @@ import plan from "../../domain/plan/plan"
 import useHeader from "../../hooks/useHeader"
 import util from "../../util/util"
 import useSelectedContent from "../../store/zustand/SelectedContent"
+import { makeCopyText } from "../../util/bible"
 
 function MyViewPage() {
   const { setMenu } = useHeader()
@@ -31,7 +32,8 @@ function MyViewPage() {
         </button>
         <button
           onClick={() => {
-            if (content?.copyText) util.copyContent(content?.copyText)
+            if (content?.copyText)
+              util.copyContent(makeCopyText(content?.copyText))
           }}
         >
           copy
