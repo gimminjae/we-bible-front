@@ -1,11 +1,18 @@
 import { IconButton } from "@mui/material"
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft"
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight"
-import { memo } from "react"
+import { memo, useMemo } from "react"
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
+import ToggleButtonsMultiple from "../global/ToggleButtonsMultiple"
+import useSelectedContent from "../../store/zustand/SelectedContent"
 
 function BibleNavigationBtns() {
   const { next, previous } = useBibleSearchParams()
+  const { content } = useSelectedContent()
+  const existSelectedVerses = useMemo(
+    () => content?.copyText?.length > 0,
+    [content?.copyText]
+  )
   return (
     <>
       <div className="w-full flex justify-between sticky bottom-[10%]">
@@ -16,6 +23,7 @@ function BibleNavigationBtns() {
         >
           <ArrowCircleLeftIcon sx={{ fontSize: 40 }} />
         </IconButton>
+        {existSelectedVerses && <ToggleButtonsMultiple />}
         <IconButton
           onClick={next}
           color="primary"

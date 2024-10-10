@@ -73,6 +73,7 @@ function BibleViewPage() {
         {bibles && bibles.length > 0 && (
           <>
             <BibleVerseList bibles={bibles} secondBibles={secondBibles} />
+            <div className="text-center p-10 m-10 text-gray-500">We Bible</div>
             <BibleNavigationBtns />
           </>
         )}

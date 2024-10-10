@@ -1,4 +1,4 @@
-const makeCopyText = (contentList: any[]) => {
+const makeCopyBibles = (contentList: any[]) => {
   if (!contentList?.length) return
   contentList.sort((a: any, b: any) => a.verse - b.verse)
   const verses = contentList.map((content: any) => content.content).join("\n\n")
@@ -15,4 +15,4 @@ const makeCopyText = (contentList: any[]) => {
   //   .join("\n\n")
 }
 
-export { makeCopyText }
+export { makeCopyBibles }

@@ -25,10 +25,6 @@ function BibleVerse({ verse, content, secondContent }: Props) {
     if (id && innerText) addCopyText(obj)
   }, [])
 
-  useEffect(() => {
-    console.log("selectedContent: ", selectedContent)
-  }, [selectedContent])
-
   const idVerse = useMemo(() => verse?.toString() || "", [verse])
 
   const styleMemo = useMemo(() => ({ fontSize }), [fontSize])
@@ -51,7 +47,7 @@ function BibleVerse({ verse, content, secondContent }: Props) {
       <span style={styleMemo}>{verse}</span>
       <div>
         <p
-          className={`${isSelectedVerse && "dotted-underline"}`}
+          className={`${isSelectedVerse ? "dotted-underline" : ""}`}
           style={styleMemo}
           id={idVerse}
           onClick={handleClickVerse}
