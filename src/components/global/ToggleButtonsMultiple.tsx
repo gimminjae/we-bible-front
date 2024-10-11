@@ -22,7 +22,8 @@ function ToggleButtonsMultiple() {
   const { content, emptyCopyText } = useSelectedContent()
 
   const copy = useCallback(() => {
-    if (content?.copyText) util.copyContent(makeCopyBibles(content?.copyText))
+    if (content?.copyText?.length)
+      util.copyContent(makeCopyBibles(content?.copyText))
     emptyCopyText()
   }, [content?.copyText])
 

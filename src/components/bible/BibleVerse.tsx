@@ -14,16 +14,19 @@ function BibleVerse({ verse, content, secondContent }: Props) {
 
   const { content: selectedContent, addCopyText } = useSelectedContent()
 
-  const handleClickVerse = useCallback((e: any) => {
-    const { id, innerText } = e.target
-    const obj = {
-      verse,
-      content,
-      chapter: searchParam.chapter,
-      bookName: getBookName(searchParam.bookCode, searchParam.lang),
-    }
-    if (id && innerText) addCopyText(obj)
-  }, [])
+  const handleClickVerse = useCallback(
+    (e: any) => {
+      const { id, innerText } = e.target
+      const obj = {
+        verse,
+        content,
+        chapter: searchParam.chapter,
+        bookName: getBookName(searchParam.bookCode, searchParam.lang),
+      }
+      if (id && innerText) addCopyText(obj)
+    },
+    [searchParam, addCopyText, verse, content]
+  )
 
   const idVerse = useMemo(() => verse?.toString() || "", [verse])
 
