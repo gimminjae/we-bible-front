@@ -32,10 +32,10 @@ const util = {
         (err) => console.error("Could not copy text: ", err)
       )
     } else {
-      this.postMessage("copy", content)
-      // window.ReactNativeWebView?.postMessage(
-      //   JSON.stringify({ type: "copy", data: content })
-      // )
+      // this.postMessage("copy", content)
+      window.ReactNativeWebView?.postMessage(
+        JSON.stringify({ type: "copy", data: content })
+      )
     }
   },
   createId() {
