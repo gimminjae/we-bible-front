@@ -1,3 +1,5 @@
+import { v4 as uuid4v } from "uuid"
+
 const util = {
   getFormattedDateTime(date) {
     const year = date.getFullYear()
@@ -35,6 +37,9 @@ const util = {
       //   JSON.stringify({ type: "copy", data: content })
       // )
     }
+  },
+  createId() {
+    return uuid4v()
   },
 }
 export default util

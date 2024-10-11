@@ -3,8 +3,8 @@ import { create } from "zustand"
 type Store = {
   content: any
   set: any
-  addCopyText: any
-  emptyCopyText: any
+  add: any
+  empty: any
 }
 
 const useSelectedContent = create<Store>((set: any) => ({
@@ -18,7 +18,7 @@ const useSelectedContent = create<Store>((set: any) => ({
         },
       }
     }),
-  addCopyText: (verseObject: any) =>
+  add: (verseObject: any) =>
     set(({ content: state }: { content: any }) => {
       return {
         content: {
@@ -33,7 +33,7 @@ const useSelectedContent = create<Store>((set: any) => ({
         },
       }
     }),
-  emptyCopyText: () =>
+  empty: () =>
     set(({ content: state }: { content: any }) => {
       return {
         content: {

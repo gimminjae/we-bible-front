@@ -975,7 +975,7 @@ export const getBookName = (bookCode: string, lang: string) => {
   const bible: any = bibleInfos.find((info) => info.bookCode === bookCode)
   return bible?.bookName[lang] || ""
 }
-interface BibleInfo {
+export interface BibleInfo {
   bookCode: string
   chapter: number
   lang?: string

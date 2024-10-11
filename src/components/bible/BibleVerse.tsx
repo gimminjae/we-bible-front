@@ -12,7 +12,7 @@ function BibleVerse({ verse, content, secondContent }: Props) {
   const { searchParam } = useBibleSearchParams()
   const fontSize = `${searchParam.fontSize}px`
 
-  const { content: selectedContent, addCopyText } = useSelectedContent()
+  const { content: selectedContent, add: addCopyText } = useSelectedContent()
 
   const handleClickVerse = useCallback(
     (e: any) => {
@@ -22,6 +22,7 @@ function BibleVerse({ verse, content, secondContent }: Props) {
         content,
         chapter: searchParam.chapter,
         bookName: getBookName(searchParam.bookCode, searchParam.lang),
+        bookCode: searchParam.bookCode,
       }
       if (id && innerText) addCopyText(obj)
     },

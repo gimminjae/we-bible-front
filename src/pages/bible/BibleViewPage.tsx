@@ -22,7 +22,8 @@ function BibleViewPage() {
   const { setMenu } = useHeader()
 
   const { searchParam } = useBibleSearchParams()
-  const { content: selectedContent, emptyCopyText } = useSelectedContent()
+  const { content: selectedContent, empty: emptyCopyText } =
+    useSelectedContent()
 
   const getBibles = useCallback(
     async (param: any) => {
