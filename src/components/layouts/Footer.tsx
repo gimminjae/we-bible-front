@@ -1,15 +1,41 @@
-import React, { useState } from "react"
+import { memo, useMemo, useState } from "react"
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material"
 import SettingsIcon from "@mui/icons-material/Settings"
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import AutoStoriesIcon from "@mui/icons-material/AutoStories"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
-function footer() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [value, setValue] = useState(0)
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+function Footer() {
+  // const [value, setValue] = useState("/bible-page")
+
+  const location = useLocation()
+
+  const menuArr = useMemo(
+    () => [
+      {
+        location: "/bible-page",
+        index: 0,
+      },
+      {
+        location: "my-page",
+        index: 1,
+      },
+      {
+        location: "setting-page",
+        index: 2,
+      },
+    ],
+    []
+  )
+
+  const activeMenu = useMemo(
+    () =>
+      menuArr.find((val: any) => val.location === location.pathname)?.index ||
+      0,
+    [location, menuArr]
+  )
   const navigate = useNavigate()
+
   return (
     <>
       <Paper
@@ -18,10 +44,10 @@ function footer() {
       >
         <BottomNavigation
           showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue)
-          }}
+          value={activeMenu}
+          // onChange={(event, newValue) => {
+          //   setValue(newValue)
+          // }}
         >
           <BottomNavigationAction
             onClick={() => navigate("/bible-page")}
@@ -43,4 +69,4 @@ function footer() {
     </>
   )
 }
-export default React.memo(footer)
+export default memo(Footer)
