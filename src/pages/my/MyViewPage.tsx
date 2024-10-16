@@ -1,4 +1,11 @@
-import { memo, SyntheticEvent, useCallback, useEffect, useState } from "react"
+import {
+  memo,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 import plan from "../../domain/plan/plan"
 import useHeader from "../../hooks/useHeader"
 import util from "../../util/util"
@@ -6,6 +13,10 @@ import useSelectedContent from "../../store/zustand/SelectedContent"
 import { makeCopyBibles } from "../../util/bible"
 import PersonIcon from "@mui/icons-material/Person"
 import { Tab, Tabs } from "@mui/material"
+import OutlinedCard from "../../components/global/OutlinedCard"
+import { Like } from "../../domain/like/like"
+import { getBookName } from "../../api/bible"
+import LoyaltyIcon from "@mui/icons-material/Loyalty"
 
 function MyViewPage() {
   const { setMenu } = useHeader()
@@ -29,28 +40,48 @@ function MyViewPage() {
     )
   }, [])
 
-  const likeMockData = [
+  const likeDatas = [
     {
       id: "1",
       createDateTime: "2024-09-14 09:00:00",
-      bookCode: "genesis",
-      chapter: 1,
-      verse: 1,
-      content: "태초에.....",
+      bible: {
+        bookCode: "genesis",
+        chapter: 1,
+        verse: 1,
+        content: "태초에.....",
+      },
     },
     {
       id: "2",
       createDateTime: "2024-10-14 09:00:00",
-      bookCode: "genesis",
-      chapter: 1,
-      verse: 2,
-      content: "빛이 있으라 하시매.....",
+      bible: {
+        bookCode: "genesis",
+        chapter: 1,
+        verse: 2,
+        content: "빛이 있으라 하시매.....",
+      },
     },
   ]
 
+  const likeCardData = useMemo(
+    () =>
+      likeDatas.map((like: Like) => ({
+        title: (
+          <>
+            <LoyaltyIcon />
+            {getBookName(like.bible.bookCode, "ko")}
+            {`${like.bible.chapter}:${like.bible.verse}`}
+          </>
+        ),
+        bottomSubTitle: like.createDateTime,
+        content: like.bible.content,
+      })),
+    [likeDatas]
+  )
+
   return (
     <>
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-5">
         <Tabs
           value={tabValue}
           variant="fullWidth"
@@ -61,6 +92,20 @@ function MyViewPage() {
           <Tab label="Memo" />
         </Tabs>
       </div>
+      {tabValue === 0 && (
+        <ol className="space-y-2">
+          {likeCardData.map((likeCard: any) => (
+            <li className="flex justify-center">
+              <OutlinedCard
+                className="w-[80%] h-[80%] shadow-md"
+                title={likeCard?.title}
+                bottomSubTitle={likeCard?.bottomSubTitle}
+                content={likeCard?.content}
+              />
+            </li>
+          ))}
+        </ol>
+      )}
       {/* <div>
         my page
         <button
@@ -75,14 +120,6 @@ function MyViewPage() {
           }}
         >
           click
-        </button>
-        <button
-          onClick={() => {
-            if (content?.copyText)
-              util.copyContent(makeCopyBibles(content?.copyText))
-          }}
-        >
-          copy
         </button>
       </div> */}
     </>
