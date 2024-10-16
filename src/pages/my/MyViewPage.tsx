@@ -12,11 +12,11 @@ import util from "../../util/util"
 import useSelectedContent from "../../store/zustand/SelectedContent"
 import { makeCopyBibles } from "../../util/bible"
 import PersonIcon from "@mui/icons-material/Person"
-import { Tab, Tabs } from "@mui/material"
+import { Button, Tab, Tabs } from "@mui/material"
 import OutlinedCard from "../../components/global/OutlinedCard"
 import { Like } from "../../domain/like/like"
 import { getBookName } from "../../api/bible"
-import LoyaltyIcon from "@mui/icons-material/Loyalty"
+import FavoriteIcon from "@mui/icons-material/Favorite"
 
 function MyViewPage() {
   const { setMenu } = useHeader()
@@ -68,13 +68,20 @@ function MyViewPage() {
       likeDatas.map((like: Like) => ({
         title: (
           <>
-            <LoyaltyIcon />
-            {getBookName(like.bible.bookCode, "ko")}
+            <FavoriteIcon /> {getBookName(like.bible.bookCode, "ko")}
             {`${like.bible.chapter}:${like.bible.verse}`}
           </>
         ),
         bottomSubTitle: like.createDateTime,
-        content: like.bible.content,
+        content:
+          like.bible.content.length > 30
+            ? `${like.bible.content.substring(0, 30)}...`
+            : like.bible.content,
+        btnNode: (
+          <>
+            <Button onClick={() => console.log(like.id)}>cancel like</Button>
+          </>
+        ),
       })),
     [likeDatas]
   )
@@ -93,14 +100,15 @@ function MyViewPage() {
         </Tabs>
       </div>
       {tabValue === 0 && (
-        <ol className="space-y-2">
-          {likeCardData.map((likeCard: any) => (
-            <li className="flex justify-center">
+        <ol className="space-y-2 animate-fade-up">
+          {likeCardData.map((likeCard: any, index: number) => (
+            <li key={index} className="flex justify-center">
               <OutlinedCard
                 className="w-[80%] h-[80%] shadow-md"
                 title={likeCard?.title}
                 bottomSubTitle={likeCard?.bottomSubTitle}
                 content={likeCard?.content}
+                btnNode={likeCard.btnNode}
               />
             </li>
           ))}
