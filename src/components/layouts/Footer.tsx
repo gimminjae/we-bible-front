@@ -9,6 +9,7 @@ function Footer() {
   // const [value, setValue] = useState("/bible-page")
 
   const location = useLocation()
+  console.log(location)
 
   const menuArr = useMemo(
     () => [
@@ -17,11 +18,11 @@ function Footer() {
         index: 0,
       },
       {
-        location: "my-page",
+        location: "/my-page",
         index: 1,
       },
       {
-        location: "setting-page",
+        location: "/setting-page",
         index: 2,
       },
     ],
