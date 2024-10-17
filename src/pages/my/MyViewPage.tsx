@@ -17,6 +17,8 @@ import OutlinedCard from "../../components/global/OutlinedCard"
 import { Like } from "../../domain/like/like"
 import { getBookName } from "../../api/bible"
 import FavoriteIcon from "@mui/icons-material/Favorite"
+import { useQuery } from "@tanstack/react-query"
+import likeService from "../../api/like.service"
 
 function MyViewPage() {
   const { setMenu } = useHeader()
@@ -40,32 +42,14 @@ function MyViewPage() {
     )
   }, [])
 
-  const likeDatas = [
-    {
-      id: "1",
-      createDateTime: "2024-09-14 09:00:00",
-      bible: {
-        bookCode: "genesis",
-        chapter: 1,
-        verse: 1,
-        content: "태초에.....",
-      },
-    },
-    {
-      id: "2",
-      createDateTime: "2024-10-14 09:00:00",
-      bible: {
-        bookCode: "genesis",
-        chapter: 1,
-        verse: 2,
-        content: "빛이 있으라 하시매.....",
-      },
-    },
-  ]
+  const { data: likeDatas, refetch: refreshLikes } = useQuery<any, Error>({
+    queryKey: ["likes"],
+    queryFn: () => likeService?.getLikesByMemberId(),
+  })
 
   const likeCardData = useMemo(
     () =>
-      likeDatas.map((like: Like) => ({
+      likeDatas?.map((like: Like) => ({
         title: (
           <>
             <FavoriteIcon /> {getBookName(like.bible.bookCode, "ko")}
@@ -82,7 +66,7 @@ function MyViewPage() {
             <Button onClick={() => console.log(like.id)}>cancel like</Button>
           </>
         ),
-      })),
+      })) || [],
     [likeDatas]
   )
 

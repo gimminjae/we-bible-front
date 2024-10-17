@@ -10,6 +10,7 @@ export interface Like {
   id?: string | null
   bible: Bible
   createDateTime: string
+  memberId?: string | null
 }
 
 const like = {
