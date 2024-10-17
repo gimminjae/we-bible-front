@@ -16,6 +16,7 @@ import { getBookName } from "../../api/bible"
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import { useQuery } from "@tanstack/react-query"
 import { likeService } from "../../api"
+import { pink } from "@mui/material/colors"
 
 function MyViewPage() {
   const { setMenu } = useHeader()
@@ -49,7 +50,8 @@ function MyViewPage() {
       likeDatas?.map((like: Like) => ({
         title: (
           <>
-            <FavoriteIcon /> {getBookName(like.bible.bookCode, "ko")}
+            <FavoriteIcon sx={{ color: pink[300] }} />{" "}
+            {getBookName(like.bible.bookCode, "ko")}
             {`${like.bible.chapter}:${like.bible.verse}`}
           </>
         ),

@@ -4,6 +4,7 @@ import useSelectedContent from "../../store/zustand/SelectedContent"
 import { getBookName } from "../../api/bible"
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import { Like } from "../../domain/like/like"
+import { pink } from "@mui/material/colors"
 
 interface Props {
   verse: number
@@ -55,7 +56,7 @@ function BibleVerse({ verse, content, secondContent, like }: Props) {
         <div>{verse}</div>
         {like && (
           <div>
-            <FavoriteIcon />
+            <FavoriteIcon sx={{ color: pink[300] }} />
           </div>
         )}
       </span>

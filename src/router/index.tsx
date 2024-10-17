@@ -3,8 +3,6 @@ import { RouterPages } from "./RouterPages"
 import { useEffect } from "react"
 
 function RootRouter() {
-  const location = useLocation()
-
   return (
     <Routes>
       {RouterPages.map((page, idx) => (

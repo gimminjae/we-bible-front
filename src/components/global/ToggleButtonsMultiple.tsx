@@ -11,6 +11,7 @@ import { makeCopyBibles } from "../../util/bible"
 import useSelectedContent from "../../store/zustand/SelectedContent"
 import like from "../../domain/like/like"
 import likeDB from "../../db/like"
+import useCustomToast from "../../hooks/useCustomToast"
 
 function ToggleButtonsMultiple() {
   const [formats, setFormats] = useState(() => ["bold", "italic"])
@@ -23,10 +24,13 @@ function ToggleButtonsMultiple() {
   }
   const { content, empty } = useSelectedContent()
 
+  const { toast } = useCustomToast()
+
   const copy = useCallback(() => {
     if (content?.copyText?.length)
       util.copyContent(makeCopyBibles(content?.copyText))
     empty()
+    toast("복사되었습니다.", "success")
   }, [content?.copyText])
 
   const likeFn = useCallback(() => {
@@ -41,9 +45,10 @@ function ToggleButtonsMultiple() {
       className="animate-fade-up"
       value={formats}
       exclusive
-      // color="secondary"
+      // color="primary"
       onChange={handleFormat}
       aria-label="text formatting"
+      sx={{ boxShadow: 1, opacity: 1, bgcolor: "info.main" }}
     >
       <ToggleButton value="heart" aria-label="heart" onClick={likeFn}>
         <FavoriteIcon />
