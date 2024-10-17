@@ -48,8 +48,10 @@ function BibleVerse({ verse, content, secondContent }: Props) {
 
   return (
     <li className="flex gap-3">
-      <span style={styleMemo}>{verse}</span>
-      <div>
+      <span className="w-[10%] text-center" style={styleMemo}>
+        {verse}
+      </span>
+      <div className="w-[90%]">
         <p
           className={`${isSelectedVerse ? "dotted-underline" : ""}`}
           style={styleMemo}
