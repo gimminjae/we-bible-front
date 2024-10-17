@@ -6,11 +6,8 @@ import {
   useMemo,
   useState,
 } from "react"
-import plan from "../../domain/plan/plan"
 import useHeader from "../../hooks/useHeader"
-import util from "../../util/util"
 import useSelectedContent from "../../store/zustand/SelectedContent"
-import { makeCopyBibles } from "../../util/bible"
 import PersonIcon from "@mui/icons-material/Person"
 import { Button, Tab, Tabs } from "@mui/material"
 import OutlinedCard from "../../components/global/OutlinedCard"
@@ -18,7 +15,7 @@ import { Like } from "../../domain/like/like"
 import { getBookName } from "../../api/bible"
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import { useQuery } from "@tanstack/react-query"
-import likeService from "../../api/like.service"
+import { likeService } from "../../api"
 
 function MyViewPage() {
   const { setMenu } = useHeader()

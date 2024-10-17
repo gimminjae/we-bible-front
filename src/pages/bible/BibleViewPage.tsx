@@ -1,5 +1,4 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react"
-import bibleService from "../../api/bible"
 import useHeader from "../../hooks/useHeader"
 import {
   BibleNavigationBtns,
@@ -9,6 +8,7 @@ import {
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 import { useQuery } from "@tanstack/react-query"
 import useSelectedContent from "../../store/zustand/SelectedContent"
+import { bibleService } from "../../api"
 
 function BibleViewPage() {
   const removeDuplicates = (arr: any) => {
