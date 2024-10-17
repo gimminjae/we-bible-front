@@ -8,7 +8,8 @@ import {
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 import { useQuery } from "@tanstack/react-query"
 import useSelectedContent from "../../store/zustand/SelectedContent"
-import { bibleService } from "../../api"
+import { bibleService, likeService } from "../../api"
+import { Bible, Like } from "../../domain/like/like"
 
 function BibleViewPage() {
   const removeDuplicates = (arr: any) => {
@@ -41,10 +42,36 @@ function BibleViewPage() {
     [searchParam]
   )
 
-  const { data: bibles, refetch: refreshBibles } = useQuery<any, Error>({
+  const { data: likes, refetch: refreshLikes } = useQuery<Like[], Error>({
+    queryKey: ["likes"],
+    queryFn: () =>
+      likeService.getLikesByBookCodeAndChapterAndMemberId(
+        searchParam?.bookCode,
+        searchParam?.chapter
+      ),
+  })
+
+  const { data: bibles, refetch: refreshBibles } = useQuery<Bible[], Error>({
     queryKey: ["bibles"],
     queryFn: () => getBibles(searchParam),
   })
+
+  interface MappedBible {
+    verse: number
+    content: string
+    chapter: number
+    bookCode: string
+    like?: Like
+  }
+
+  const resultBibles: MappedBible[] = useMemo(
+    () =>
+      bibles?.map((bible: Bible) => ({
+        ...bible,
+        like: likes?.find((like: Like) => like?.bible?.verse === bible?.verse),
+      })) || [],
+    [likes, bibles]
+  )
 
   const { data: secondBibles, refetch: refreshSecondBibles } = useQuery<
     any,
@@ -66,6 +93,10 @@ function BibleViewPage() {
     emptyCopyText()
   }, [searchParam])
 
+  useEffect(() => {
+    refreshLikes()
+  }, [searchParam])
+
   useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), [bibles])
 
   return (
@@ -73,7 +104,7 @@ function BibleViewPage() {
       <div className="m-5">
         {bibles && bibles.length > 0 && (
           <>
-            <BibleVerseList bibles={bibles} secondBibles={secondBibles} />
+            <BibleVerseList bibles={resultBibles} secondBibles={secondBibles} />
             <div className="text-center p-10 m-10 text-gray-500">We Bible</div>
             <BibleNavigationBtns />
           </>

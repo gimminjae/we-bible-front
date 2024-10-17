@@ -1,4 +1,4 @@
-import { BibleInfo } from "../../api/bible"
+import { BibleInfo } from "../bible/bible"
 
 export interface Memo {
   id?: string

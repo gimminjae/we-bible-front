@@ -18,6 +18,7 @@ function BibleVerseList({ bibles, secondBibles }: Props) {
             }
             key={idx}
             content={bible.content}
+            like={bible?.like}
           />
         ))}
     </ol>

@@ -2,13 +2,16 @@ import { memo, useCallback, useEffect, useMemo } from "react"
 import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 import useSelectedContent from "../../store/zustand/SelectedContent"
 import { getBookName } from "../../api/bible"
+import FavoriteIcon from "@mui/icons-material/Favorite"
+import { Like } from "../../domain/like/like"
 
 interface Props {
   verse: number
   content: string
   secondContent?: string
+  like?: Like
 }
-function BibleVerse({ verse, content, secondContent }: Props) {
+function BibleVerse({ verse, content, secondContent, like }: Props) {
   const { searchParam } = useBibleSearchParams()
   const fontSize = `${searchParam.fontSize}px`
 
@@ -49,7 +52,12 @@ function BibleVerse({ verse, content, secondContent }: Props) {
   return (
     <li className="flex gap-3">
       <span className="w-[10%] text-center" style={styleMemo}>
-        {verse}
+        <div>{verse}</div>
+        {like && (
+          <div>
+            <FavoriteIcon />
+          </div>
+        )}
       </span>
       <div className="w-[90%]">
         <p

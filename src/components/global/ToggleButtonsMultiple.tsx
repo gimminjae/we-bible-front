@@ -31,6 +31,7 @@ function ToggleButtonsMultiple() {
 
   const likeFn = useCallback(() => {
     const likeBibles = like.create(content?.copyText)
+    console.log(likeBibles)
     likeDB.saveAll(likeBibles)
     empty()
   }, [content?.copyText])

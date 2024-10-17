@@ -1,3 +1,4 @@
+import { BibleInfo } from "../domain/bible/bible"
 import { api } from "../hooks/useApi"
 
 export const bibleInfos = [
@@ -974,12 +975,6 @@ export const versions = [
 export const getBookName = (bookCode: string, lang: string) => {
   const bible: any = bibleInfos.find((info) => info.bookCode === bookCode)
   return bible?.bookName[lang] || ""
-}
-export interface BibleInfo {
-  bookCode: string
-  chapter: number
-  lang?: string
-  bookCodeByLang: any
 }
 const bibleService = {
   async getBible(params: BibleInfo) {
