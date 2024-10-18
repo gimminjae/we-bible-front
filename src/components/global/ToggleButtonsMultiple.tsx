@@ -12,6 +12,7 @@ import useSelectedContent from "../../store/zustand/SelectedContent"
 import like from "../../domain/like/like"
 import likeDB from "../../db/like"
 import { useSnackbar } from "notistack"
+import useToast from "../../hooks/useToast"
 
 function ToggleButtonsMultiple() {
   const [formats, setFormats] = useState(() => ["bold", "italic"])
@@ -24,19 +25,21 @@ function ToggleButtonsMultiple() {
   }
   const { content, empty } = useSelectedContent()
   const { enqueueSnackbar } = useSnackbar()
+  const { success } = useToast()
 
   const copy = useCallback(() => {
     if (content?.copyText?.length)
       util.copyContent(makeCopyBibles(content?.copyText))
     empty()
-    enqueueSnackbar("복사되었습니다.", {
-      autoHideDuration: 3000,
-      anchorOrigin: {
-        vertical: "top",
-        horizontal: "center",
-      },
-      variant: "success",
-    })
+    success("복사되었습니다.")
+    // enqueueSnackbar("복사되었습니다.", {
+    //   autoHideDuration: 3000,
+    //   anchorOrigin: {
+    //     vertical: "top",
+    //     horizontal: "center",
+    //   },
+    //   variant: "success",
+    // })
   }, [content?.copyText])
 
   const likeFn = useCallback(() => {
