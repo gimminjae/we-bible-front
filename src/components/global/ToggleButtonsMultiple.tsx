@@ -24,7 +24,6 @@ function ToggleButtonsMultiple() {
     setFormats(newFormats)
   }
   const { content, empty } = useSelectedContent()
-  const { enqueueSnackbar } = useSnackbar()
   const { success } = useToast()
 
   const copy = useCallback(() => {
@@ -32,14 +31,6 @@ function ToggleButtonsMultiple() {
       util.copyContent(makeCopyBibles(content?.copyText))
     empty()
     success("복사되었습니다.")
-    // enqueueSnackbar("복사되었습니다.", {
-    //   autoHideDuration: 3000,
-    //   anchorOrigin: {
-    //     vertical: "top",
-    //     horizontal: "center",
-    //   },
-    //   variant: "success",
-    // })
   }, [content?.copyText])
 
   const likeFn = useCallback(() => {

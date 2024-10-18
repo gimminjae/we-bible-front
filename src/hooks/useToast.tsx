@@ -4,7 +4,7 @@ const useToast = () => {
   const { enqueueSnackbar } = useSnackbar()
   const success = (message: string) => {
     enqueueSnackbar(message, {
-      autoHideDuration: 3000,
+      autoHideDuration: 2000,
       anchorOrigin: {
         vertical: "top",
         horizontal: "center",
@@ -14,7 +14,7 @@ const useToast = () => {
   }
   const error = (message: string) => {
     enqueueSnackbar(message, {
-      autoHideDuration: 3000,
+      autoHideDuration: 2000,
       anchorOrigin: {
         vertical: "top",
         horizontal: "center",
@@ -24,7 +24,7 @@ const useToast = () => {
   }
   const warning = (message: string) => {
     enqueueSnackbar(message, {
-      autoHideDuration: 3000,
+      autoHideDuration: 2000,
       anchorOrigin: {
         vertical: "top",
         horizontal: "center",
@@ -34,7 +34,7 @@ const useToast = () => {
   }
   const info = (message: string) => {
     enqueueSnackbar(message, {
-      autoHideDuration: 3000,
+      autoHideDuration: 2000,
       anchorOrigin: {
         vertical: "top",
         horizontal: "center",
@@ -44,7 +44,7 @@ const useToast = () => {
   }
   const defaultToast = (message: string) => {
     enqueueSnackbar(message, {
-      autoHideDuration: 3000,
+      autoHideDuration: 2000,
       anchorOrigin: {
         vertical: "top",
         horizontal: "center",
