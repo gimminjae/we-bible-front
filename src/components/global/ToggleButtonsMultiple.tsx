@@ -11,7 +11,7 @@ import { makeCopyBibles } from "../../util/bible"
 import useSelectedContent from "../../store/zustand/SelectedContent"
 import like from "../../domain/like/like"
 import likeDB from "../../db/like"
-import useCustomToast from "../../hooks/useCustomToast"
+import { useSnackbar } from "notistack"
 
 function ToggleButtonsMultiple() {
   const [formats, setFormats] = useState(() => ["bold", "italic"])
@@ -23,14 +23,20 @@ function ToggleButtonsMultiple() {
     setFormats(newFormats)
   }
   const { content, empty } = useSelectedContent()
-
-  const { toast } = useCustomToast()
+  const { enqueueSnackbar } = useSnackbar()
 
   const copy = useCallback(() => {
     if (content?.copyText?.length)
       util.copyContent(makeCopyBibles(content?.copyText))
     empty()
-    toast("복사되었습니다.", "success")
+    enqueueSnackbar("복사되었습니다.", {
+      autoHideDuration: 3000,
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "center",
+      },
+      variant: "success",
+    })
   }, [content?.copyText])
 
   const likeFn = useCallback(() => {
