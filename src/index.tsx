@@ -4,22 +4,24 @@ import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import { BrowserRouter } from "react-router-dom"
-// import { ThemeProvider, createTheme } from "@mui/material/styles"
+import { ThemeProvider, createTheme } from "@mui/material/styles"
+import { CssBaseline } from "@mui/material"
 
-// const theme = createTheme({
-//   colorSchemes: {
-//     dark: true,
-//   },
-// })
+const theme = createTheme({
+  colorSchemes: {
+    dark: true,
+  },
+})
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   // <React.StrictMode>
-  // <ThemeProvider theme={theme}>
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-  // </ThemeProvider>
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ThemeProvider>
   // </React.StrictMode>
 )
 

@@ -51,11 +51,11 @@ function SettingViewPage() {
               setMode(event.target.value as "system" | "light" | "dark")
             }
           >
-            <FormControlLabel
+            {/* <FormControlLabel
               value="system"
               control={<Radio />}
               label="System"
-            />
+            /> */}
             <FormControlLabel value="light" control={<Radio />} label="Light" />
             <FormControlLabel value="dark" control={<Radio />} label="Dark" />
           </RadioGroup>
