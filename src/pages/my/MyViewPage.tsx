@@ -71,7 +71,7 @@ function MyViewPage() {
 
   return (
     <>
-      <div className="flex justify-center mb-5">
+      <div className="flex justify-center mb-1">
         <Tabs
           value={tabValue}
           variant="fullWidth"
@@ -83,9 +83,9 @@ function MyViewPage() {
         </Tabs>
       </div>
       {tabValue === 0 && (
-        <ol className="space-y-2 animate-fade-up">
+        <div className="overflow-y-scroll h-[70vh] space-y-2 animate-fade-up">
           {likeCardData.map((likeCard: any, index: number) => (
-            <li key={index} className="flex justify-center">
+            <div key={index} className="flex justify-center">
               <OutlinedCard
                 className="w-[80%] h-[80%] shadow-md"
                 title={likeCard?.title}
@@ -93,9 +93,9 @@ function MyViewPage() {
                 content={likeCard?.content}
                 btnNode={likeCard.btnNode}
               />
-            </li>
+            </div>
           ))}
-        </ol>
+        </div>
       )}
       {/* <div>
         my page
