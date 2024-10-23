@@ -24,6 +24,7 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  Grid2,
   IconButton,
   InputLabel,
   MenuItem,
@@ -41,7 +42,7 @@ import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 import { bibleInfos, getBookName, versions } from "../../api/bible"
 import CancelIcon from "@mui/icons-material/Cancel"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import { BorderColor } from "@mui/icons-material"
+import { BorderColor, Margin } from "@mui/icons-material"
 import { useTheme } from "@mui/material/styles"
 
 interface TabPanelProps {
@@ -212,40 +213,27 @@ function BibleViewPageHeader() {
                     {getBookName(info.bookCode, searchParam.lang)}
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Grid
-                      container
-                      direction="row"
-                      sx={{
-                        justifyContent: "flex-start",
-                        alignItems: "flex-start",
-                      }}
-                      spacing={2}
-                      wrap="wrap"
-                    >
+                    <div className="grid grid-cols-5">
                       {Array.from(
                         { length: info.maxChapter },
                         (_, i) => i + 1
                       ).map((el, index) => (
-                        <Grid
-                          item
-                          key={index}
-                          xs
-                          sx={{ displayPrint: "block" }}
+                        <Badge
+                          sx={{
+                            margin: 1,
+                          }}
+                          color="secondary"
+                          onClick={toggleDrawer(
+                            "bottom",
+                            false,
+                            info.bookCode,
+                            el
+                          )}
                         >
-                          <Badge
-                            color="secondary"
-                            onClick={toggleDrawer(
-                              "bottom",
-                              false,
-                              info.bookCode,
-                              el
-                            )}
-                          >
-                            {rectangle(el)}
-                          </Badge>
-                        </Grid>
+                          {rectangle(el)}
+                        </Badge>
                       ))}
-                    </Grid>
+                    </div>
                   </AccordionDetails>
                 </Accordion>
               )
