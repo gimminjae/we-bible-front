@@ -30,7 +30,13 @@ const summarizeRanges = (nums: any[]) => {
 const makeCopyBibles = (contentList: any[]) => {
   if (!contentList?.length) return
   contentList.sort((a: any, b: any) => a.verse - b.verse)
-  const verses = contentList.map((content: any) => content.content).join("\n\n")
+  const verses = contentList
+    .map((content: any) =>
+      content.content.startsWith("[")
+        ? content.content.replace(/\[.*?\]/g, "").trim()
+        : content.content
+    )
+    .join("\n\n")
   const bookName = contentList[0].bookName
   const chapterVerse = `${contentList[0].chapter}:${summarizeRanges(
     contentList?.map((content: any) => content.verse)

@@ -50,35 +50,57 @@ function BibleVerse({ verse, content, secondContent, like }: Props) {
     [selectedContent?.copyText, verse]
   )
 
+  const removeBracketsContent = useCallback((str: string) => {
+    return str.replace(/\[.*?\]/g, "").trim()
+  }, [])
+
+  const extractFirstBracketContent = useCallback((str: string) => {
+    const match = str.match(/\[.*?\]/)
+    return match ? match[0] : null
+  }, [])
+
+  const isStartWithBracket = useMemo(() => content.startsWith("["), [content])
+
   return (
-    <li className="flex gap-3">
-      <span className="w-[10%] text-center" style={styleMemo}>
-        <div>{verse}</div>
-        {like && (
+    <li>
+      <div>
+        {isStartWithBracket && (
           <div>
-            <FavoriteIcon sx={{ color: pink[300] }} />
+            <span className="text-blue-400" style={styleMemo}>
+              {extractFirstBracketContent(content)}
+            </span>
           </div>
         )}
-      </span>
-      <div className="w-[90%]">
-        <p
-          className={`${isSelectedVerse ? "dotted-underline" : ""}`}
-          style={styleMemo}
-          id={idVerse}
-          onClick={handleClickVerse}
-        >
-          {content}
-        </p>
-        {isDoubleMode && (
-          <p
-            id={idVerse}
-            className="text-gray-400"
-            style={styleMemo}
-            onClick={handleClickVerse}
-          >
-            {secondContent}
-          </p>
-        )}
+        <div className="flex gap-3">
+          <span className="w-[10%] text-center" style={styleMemo}>
+            <div>{verse}</div>
+            {like && (
+              <div>
+                <FavoriteIcon sx={{ color: pink[300] }} />
+              </div>
+            )}
+          </span>
+          <div className="w-[90%]">
+            <p
+              className={`${isSelectedVerse ? "dotted-underline" : ""}`}
+              style={styleMemo}
+              id={idVerse}
+              onClick={handleClickVerse}
+            >
+              {isStartWithBracket ? removeBracketsContent(content) : content}
+            </p>
+            {isDoubleMode && (
+              <p
+                id={idVerse}
+                className="text-gray-400"
+                style={styleMemo}
+                onClick={handleClickVerse}
+              >
+                {secondContent}
+              </p>
+            )}
+          </div>
+        </div>
       </div>
     </li>
   )
