@@ -7,6 +7,7 @@ import { CookiesProvider } from "react-cookie"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { SnackbarProvider } from "notistack"
+import { Box } from "@mui/material"
 
 const queryClient = new QueryClient()
 
