@@ -32,6 +32,17 @@ const likeDatas: Like[] = [
       content: "하나님이 가라사대 빛이 있으라 하시매 빛이 있었고",
     },
   },
+  {
+    id: "5",
+    createDateTime: "2024-10-24 09:10:00",
+    bible: {
+      bookCode: "genesis",
+      chapter: 5,
+      verse: 1,
+      content:
+        "아담 자손의 계보가 이러하니라 하나님이 사람을 창조하실 때에 하나님의 형상대로 지으시되",
+    },
+  },
 ]
 
 const likeService = {

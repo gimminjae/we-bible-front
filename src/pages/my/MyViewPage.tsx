@@ -71,7 +71,7 @@ function MyViewPage() {
 
   return (
     <>
-      <div className="flex justify-center mb-1">
+      <div className="flex justify-center mb-1 shadow-md">
         <Tabs
           value={tabValue}
           variant="fullWidth"
@@ -83,7 +83,7 @@ function MyViewPage() {
         </Tabs>
       </div>
       {tabValue === 0 && (
-        <div className="overflow-y-scroll h-[70vh] space-y-2 animate-fade-up">
+        <div className="overflow-y-scroll h-[75vh] space-y-2 animate-fade-up">
           {likeCardData.map((likeCard: any, index: number) => (
             <div key={index} className="flex justify-center">
               <OutlinedCard
@@ -97,22 +97,6 @@ function MyViewPage() {
           ))}
         </div>
       )}
-      {/* <div>
-        my page
-        <button
-          onClick={() => {
-            const newPlan = plan.create(
-              "test",
-              { oldBibleGoal: 1, newBibleGoal: 1 },
-              "2024-09-01",
-              "2024-09-11"
-            )
-            console.log("newPlan: ", newPlan)
-          }}
-        >
-          click
-        </button>
-      </div> */}
     </>
   )
 }
