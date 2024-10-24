@@ -81,18 +81,12 @@ function BibleViewPageHeader() {
     changeViewMode,
     changeSecondLang,
   } = useBibleSearchParams()
-  const [state, setState] = useState({
-    bottom: false,
-  })
-  const [langState, setLangState] = useState({
-    bottom: false,
-  })
-  const [fontState, setFontState] = useState({
-    right: false,
-  })
+  const [bibleDrawer, setBibleDrawer] = useState(false)
+  const [languageDrawer, setLanguageDrawer] = useState(false)
+  const [fontDrawer, setFontDrawer] = useState(false)
 
   const toggleDrawer =
-    (anchor: string, open: boolean, bookCode?: string, chapter?: number) =>
+    (open: boolean, bookCode?: string, chapter?: number) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
       if (bookCode && chapter) set(bookCode, chapter)
       if (
@@ -104,10 +98,10 @@ function BibleViewPageHeader() {
         return
       }
 
-      setState((prev) => ({ ...prev, [anchor]: open }))
+      setBibleDrawer(open)
     }
   const toggleDrawerFontSize =
-    (anchor: string, open: boolean, bookCode?: string, chapter?: number) =>
+    (open: boolean, bookCode?: string, chapter?: number) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
       if (bookCode && chapter) set(bookCode, chapter)
       if (
@@ -119,10 +113,10 @@ function BibleViewPageHeader() {
         return
       }
 
-      setFontState((prev) => ({ ...prev, [anchor]: open }))
+      setFontDrawer(open)
     }
   const toggleDrawerLang =
-    (anchor: string, open: boolean, lang?: string) =>
+    (open: boolean, lang?: string) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
       if (lang) changeLang(lang)
       if (
@@ -134,7 +128,7 @@ function BibleViewPageHeader() {
         return
       }
 
-      setLangState((prev) => ({ ...prev, [anchor]: open }))
+      setLanguageDrawer(open)
     }
 
   const rectangle = useCallback(
@@ -163,17 +157,14 @@ function BibleViewPageHeader() {
     setValue(newValue)
   }
 
-  const list = useCallback(
-    (anchor: string) => (
+  const bibleSelect = useMemo(
+    () => (
       <Box
-        sx={{ width: anchor === "bottom" ? "auto" : 250 }}
+        sx={{ width: "auto" }}
         role="presentation"
-        onKeyDown={toggleDrawer(anchor, false)}
+        onKeyDown={toggleDrawer(false)}
       >
-        <ListItemText
-          onClick={toggleDrawer(anchor, false)}
-          className="text-center"
-        >
+        <ListItemText onClick={toggleDrawer(false)} className="text-center">
           <CancelIcon />
         </ListItemText>
         <AppBar position="static">
@@ -212,12 +203,7 @@ function BibleViewPageHeader() {
                             margin: 1,
                           }}
                           color="secondary"
-                          onClick={toggleDrawer(
-                            "bottom",
-                            false,
-                            info.bookCode,
-                            el
-                          )}
+                          onClick={toggleDrawer(false, info.bookCode, el)}
                         >
                           {rectangle(el)}
                         </Badge>
@@ -241,35 +227,22 @@ function BibleViewPageHeader() {
                     {getBookName(info.bookCode, searchParam.lang)}
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Grid
-                      container
-                      direction="row"
-                      sx={{
-                        // justifyContent: "space-around",
-                        alignItems: "flex-start",
-                      }}
-                      spacing={2}
-                      wrap="wrap"
-                    >
+                    <div className="grid grid-cols-5">
                       {Array.from(
                         { length: info.maxChapter },
                         (_, i) => i + 1
                       ).map((el, index) => (
-                        <Grid item key={index} xs>
-                          <Badge
-                            color="secondary"
-                            onClick={toggleDrawer(
-                              "bottom",
-                              false,
-                              info.bookCode,
-                              el
-                            )}
-                          >
-                            {rectangle(el)}
-                          </Badge>
-                        </Grid>
+                        <Badge
+                          sx={{
+                            margin: 1,
+                          }}
+                          color="secondary"
+                          onClick={toggleDrawer(false, info.bookCode, el)}
+                        >
+                          {rectangle(el)}
+                        </Badge>
                       ))}
-                    </Grid>
+                    </div>
                   </AccordionDetails>
                 </Accordion>
               )
@@ -279,18 +252,18 @@ function BibleViewPageHeader() {
     ),
     [value, searchParam.lang]
   )
-  const langList = useCallback(
+  const languageSelect = useMemo(
     () => (
       <Box
         sx={{ width: "auto" }}
         role="presentation"
-        onKeyDown={toggleDrawerLang("bottom", false)}
+        onKeyDown={toggleDrawerLang(false)}
       >
         <List>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemText
-                onClick={toggleDrawerLang("bottom", false)}
+                onClick={toggleDrawerLang(false)}
                 className="text-center"
               >
                 <CancelIcon />
@@ -301,7 +274,7 @@ function BibleViewPageHeader() {
             <ListItem key={idx} disablePadding>
               <ListItemButton>
                 <ListItemText
-                  onClick={toggleDrawerLang("bottom", false, el.val)}
+                  onClick={toggleDrawerLang(false, el.val)}
                   primary={`${el.txt} (${el.description})`}
                 />
               </ListItemButton>
@@ -325,8 +298,8 @@ function BibleViewPageHeader() {
     changeSecondLang(value)
   }, [])
 
-  const fontSize = useCallback(
-    (anchor: string) => (
+  const fontSizeSelect = useMemo(
+    () => (
       <Box
         sx={{
           width: "auto",
@@ -335,7 +308,7 @@ function BibleViewPageHeader() {
           justifyContent: "center",
           alignItems: "center",
         }}
-        onKeyDown={toggleDrawerFontSize(anchor, false)}
+        onKeyDown={toggleDrawerFontSize(false)}
       >
         <div className="w-[90%] mt-10 flex justify-between whitespace-nowrap">
           <FormControlLabel
@@ -405,36 +378,34 @@ function BibleViewPageHeader() {
           // variant="contained"
           aria-label="Disabled button group"
         >
-          <Button onClick={toggleDrawer("bottom", true)}>
+          <Button onClick={toggleDrawer(true)}>
             {`${getBookName(searchParam.bookCode, searchParam.lang)} ${
               searchParam.chapter
             }`}
           </Button>
           <SwipeableDrawer
             id="bible"
-            anchor={"bottom"}
-            open={state.bottom}
-            onClose={toggleDrawer("bottom", false)}
-            onOpen={toggleDrawer("bottom", true)}
+            anchor="bottom"
+            open={bibleDrawer}
+            onClose={toggleDrawer(false)}
+            onOpen={toggleDrawer(true)}
           >
-            {list("bottom")}
+            {bibleSelect}
           </SwipeableDrawer>
           <SwipeableDrawer
             id="lang"
-            anchor={"bottom"}
-            open={langState.bottom}
-            onClose={toggleDrawerLang("bottom", false)}
-            onOpen={toggleDrawerLang("bottom", true)}
+            anchor="bottom"
+            open={languageDrawer}
+            onClose={toggleDrawerLang(false)}
+            onOpen={toggleDrawerLang(true)}
           >
-            {langList()}
+            {languageSelect}
           </SwipeableDrawer>
-          <Button onClick={toggleDrawerLang("bottom", true)}>
-            {displayLang}
-          </Button>
+          <Button onClick={toggleDrawerLang(true)}>{displayLang}</Button>
         </ButtonGroup>
         <ButtonGroup>
           <IconButton
-            onClick={toggleDrawerFontSize("right", true)}
+            onClick={toggleDrawerFontSize(true)}
             aria-label="delete"
             size="medium"
           >
@@ -443,12 +414,12 @@ function BibleViewPageHeader() {
         </ButtonGroup>
         <SwipeableDrawer
           id="lang"
-          anchor={"bottom"}
-          open={fontState.right}
-          onClose={toggleDrawerFontSize("right", false)}
-          onOpen={toggleDrawerFontSize("right", true)}
+          anchor="bottom"
+          open={fontDrawer}
+          onClose={toggleDrawerFontSize(false)}
+          onOpen={toggleDrawerFontSize(true)}
         >
-          {fontSize("right")}
+          {fontSizeSelect}
         </SwipeableDrawer>
       </div>
     </>
