@@ -1,12 +1,5 @@
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react"
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react"
 import { setCookie } from "../../util/cookie"
-import { LangSelect } from "."
 import Box from "@mui/material/Box"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import Button from "@mui/material/Button"
@@ -24,14 +17,11 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
-  Grid2,
   IconButton,
   InputLabel,
   MenuItem,
-  Paper,
   Select,
   Slider,
-  styled,
   Switch,
   Tab,
   Tabs,
@@ -42,7 +32,6 @@ import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 import { bibleInfos, getBookName, versions } from "../../api/bible"
 import CancelIcon from "@mui/icons-material/Cancel"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import { BorderColor, Margin } from "@mui/icons-material"
 import { useTheme } from "@mui/material/styles"
 
 interface TabPanelProps {
@@ -466,4 +455,4 @@ function BibleViewPageHeader() {
   )
 }
 
-export default React.memo(BibleViewPageHeader)
+export default memo(BibleViewPageHeader)
