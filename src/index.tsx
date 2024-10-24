@@ -6,10 +6,17 @@ import reportWebVitals from "./reportWebVitals"
 import { BrowserRouter } from "react-router-dom"
 import { ThemeProvider, createTheme } from "@mui/material/styles"
 import { CssBaseline } from "@mui/material"
+import "./font.css"
+import { getCookie } from "./util/cookie"
+
+const font = getCookie("font")
 
 const theme = createTheme({
   colorSchemes: {
     dark: true,
+  },
+  typography: {
+    fontFamily: font || "",
   },
 })
 

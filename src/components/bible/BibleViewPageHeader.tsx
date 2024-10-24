@@ -85,7 +85,7 @@ function BibleViewPageHeader() {
   const [languageDrawer, setLanguageDrawer] = useState(false)
   const [fontDrawer, setFontDrawer] = useState(false)
 
-  const toggleDrawer =
+  const toggleDrawerBible =
     (open: boolean, bookCode?: string, chapter?: number) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
       if (bookCode && chapter) set(bookCode, chapter)
@@ -162,9 +162,12 @@ function BibleViewPageHeader() {
       <Box
         sx={{ width: "auto" }}
         role="presentation"
-        onKeyDown={toggleDrawer(false)}
+        onKeyDown={toggleDrawerBible(false)}
       >
-        <ListItemText onClick={toggleDrawer(false)} className="text-center">
+        <ListItemText
+          onClick={toggleDrawerBible(false)}
+          className="text-center"
+        >
           <CancelIcon />
         </ListItemText>
         <AppBar position="static">
@@ -203,7 +206,7 @@ function BibleViewPageHeader() {
                             margin: 1,
                           }}
                           color="secondary"
-                          onClick={toggleDrawer(false, info.bookCode, el)}
+                          onClick={toggleDrawerBible(false, info.bookCode, el)}
                         >
                           {rectangle(el)}
                         </Badge>
@@ -237,7 +240,7 @@ function BibleViewPageHeader() {
                             margin: 1,
                           }}
                           color="secondary"
-                          onClick={toggleDrawer(false, info.bookCode, el)}
+                          onClick={toggleDrawerBible(false, info.bookCode, el)}
                         >
                           {rectangle(el)}
                         </Badge>
@@ -378,7 +381,7 @@ function BibleViewPageHeader() {
           // variant="contained"
           aria-label="Disabled button group"
         >
-          <Button onClick={toggleDrawer(true)}>
+          <Button onClick={toggleDrawerBible(true)}>
             {`${getBookName(searchParam.bookCode, searchParam.lang)} ${
               searchParam.chapter
             }`}
@@ -387,8 +390,8 @@ function BibleViewPageHeader() {
             id="bible"
             anchor="bottom"
             open={bibleDrawer}
-            onClose={toggleDrawer(false)}
-            onOpen={toggleDrawer(true)}
+            onClose={toggleDrawerBible(false)}
+            onOpen={toggleDrawerBible(true)}
           >
             {bibleSelect}
           </SwipeableDrawer>

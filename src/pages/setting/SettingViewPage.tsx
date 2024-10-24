@@ -2,6 +2,9 @@ import { useEffect } from "react"
 import useHeader from "../../hooks/useHeader"
 import SettingsIcon from "@mui/icons-material/Settings"
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   FormControl,
   FormControlLabel,
@@ -10,6 +13,19 @@ import {
   RadioGroup,
   useColorScheme,
 } from "@mui/material"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+
+const fontList = [
+  "GmarketSansMedium",
+  "Dohyeon",
+  "LeeSeoyun",
+  "CookieRun-Regular",
+  "ChosunGs",
+  "BookkMyungjo-Bd",
+  "Chosunilbo_myungjo",
+  "Pretendard-Regular",
+  "EF_jejudoldam",
+]
 
 function SettingViewPage() {
   const { setMenu } = useHeader()
@@ -30,6 +46,7 @@ function SettingViewPage() {
       <Box
         sx={{
           display: "flex",
+          flexDirection: "column",
           width: "100%",
           alignItems: "center",
           justifyContent: "center",
@@ -40,25 +57,51 @@ function SettingViewPage() {
           minHeight: "56px",
         }}
       >
+        <FormControl className="w-full">
+          <FormLabel id="theme">Theme</FormLabel>
+          <div>
+            <RadioGroup
+              aria-labelledby="demo-theme-toggle"
+              name="theme-toggle"
+              row
+              value={mode}
+              onChange={(event) =>
+                setMode(event.target.value as "system" | "light" | "dark")
+              }
+            >
+              <FormControlLabel
+                value="light"
+                control={<Radio />}
+                label="Light"
+              />
+              <FormControlLabel value="dark" control={<Radio />} label="Dark" />
+            </RadioGroup>
+          </div>
+        </FormControl>
         <FormControl>
-          <FormLabel id="demo-theme-toggle">Theme</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-theme-toggle"
-            name="theme-toggle"
-            row
-            value={mode}
-            onChange={(event) =>
-              setMode(event.target.value as "system" | "light" | "dark")
-            }
-          >
-            {/* <FormControlLabel
-              value="system"
-              control={<Radio />}
-              label="System"
-            /> */}
-            <FormControlLabel value="light" control={<Radio />} label="Light" />
-            <FormControlLabel value="dark" control={<Radio />} label="Dark" />
-          </RadioGroup>
+          <FormLabel id="font">Font</FormLabel>
+          <div>
+            {fontList.map(
+              (font, index) =>
+                index > 0 && (
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1-content"
+                      id="panel1-header"
+                      style={{ fontFamily: font }}
+                    >
+                      {font}
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <p style={{ fontFamily: font }}>
+                        태초에 하나님이 천지를 창조하시니라 창세기 1장 1절
+                      </p>
+                    </AccordionDetails>
+                  </Accordion>
+                )
+            )}
+          </div>
         </FormControl>
       </Box>
     </>
