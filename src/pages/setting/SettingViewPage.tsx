@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import useHeader from "../../hooks/useHeader"
 import SettingsIcon from "@mui/icons-material/Settings"
 import {
@@ -6,6 +6,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Button,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -14,6 +15,8 @@ import {
   useColorScheme,
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import { setCookie } from "../../util/cookie"
+import useToast from "../../hooks/useToast"
 
 const fontList = [
   "GmarketSansMedium",
@@ -29,7 +32,7 @@ const fontList = [
 
 function SettingViewPage() {
   const { setMenu } = useHeader()
-
+  const { info } = useToast()
   const { mode, setMode } = useColorScheme()
 
   useEffect(() => {
@@ -40,6 +43,15 @@ function SettingViewPage() {
       </div>
     )
   }, [])
+
+  const handleClickFont = useCallback(
+    (font: string) => (e: any) => {
+      setCookie("font", font)
+      info("앱이 새로고침됩니다")
+      setTimeout(() => window.location.reload(), 2000)
+    },
+    []
+  )
 
   return (
     <>
@@ -97,6 +109,11 @@ function SettingViewPage() {
                       <p style={{ fontFamily: font }}>
                         태초에 하나님이 천지를 창조하시니라 창세기 1장 1절
                       </p>
+                      <div className="flex justify-end">
+                        <Button onClick={handleClickFont(font)}>
+                          폰트 적용
+                        </Button>
+                      </div>
                     </AccordionDetails>
                   </Accordion>
                 )
