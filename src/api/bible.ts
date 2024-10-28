@@ -120,7 +120,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "1_samuel",
+    bookCode: "1samuel",
     bookSeq: 9,
     bookName: {
       en: "1 Samuel",
@@ -133,7 +133,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "2_samuel",
+    bookCode: "2samuel",
     bookSeq: 10,
     bookName: {
       en: "2 Samuel",
@@ -146,7 +146,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "1_kings",
+    bookCode: "1kings",
     bookSeq: 11,
     bookName: {
       en: "1 Kings",
@@ -159,7 +159,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "2_kings",
+    bookCode: "2kings",
     bookSeq: 12,
     bookName: {
       en: "2 Kings",
@@ -172,7 +172,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "1_chronicles",
+    bookCode: "1chronicles",
     bookSeq: 13,
     bookName: {
       en: "1 Chronicles",
@@ -185,7 +185,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "2_chronicles",
+    bookCode: "2chronicles",
     bookSeq: 14,
     bookName: {
       en: "2 Chronicles",
@@ -289,7 +289,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "song_of_songs",
+    bookCode: "songofsolomon",
     bookSeq: 22,
     bookName: {
       en: "Song of Songs",
@@ -601,7 +601,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "1_corinthians",
+    bookCode: "1corinthians",
     bookSeq: 46,
     bookName: {
       en: "1 Corinthians",
@@ -614,7 +614,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "2_corinthians",
+    bookCode: "2corinthians",
     bookSeq: 47,
     bookName: {
       en: "2 Corinthians",
@@ -679,7 +679,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "1_thessalonians",
+    bookCode: "1thessalonians",
     bookSeq: 52,
     bookName: {
       en: "1 Thessalonians",
@@ -692,7 +692,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "2_thessalonians",
+    bookCode: "2thessalonians",
     bookSeq: 53,
     bookName: {
       en: "2 Thessalonians",
@@ -705,7 +705,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "1_timothy",
+    bookCode: "1timothy",
     bookSeq: 54,
     bookName: {
       en: "1 Timothy",
@@ -718,7 +718,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "2_timothy",
+    bookCode: "2timothy",
     bookSeq: 55,
     bookName: {
       en: "2 Timothy",
@@ -783,7 +783,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "1_peter",
+    bookCode: "1peter",
     bookSeq: 60,
     bookName: {
       en: "1 Peter",
@@ -796,7 +796,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "2_peter",
+    bookCode: "2peter",
     bookSeq: 61,
     bookName: {
       en: "2 Peter",
@@ -809,7 +809,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "1_john",
+    bookCode: "1john",
     bookSeq: 62,
     bookName: {
       en: "1 John",
@@ -822,7 +822,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "2_john",
+    bookCode: "2john",
     bookSeq: 63,
     bookName: {
       en: "2 John",
@@ -835,7 +835,7 @@ export const bibleInfos = [
     },
   },
   {
-    bookCode: "3_john",
+    bookCode: "3john",
     bookSeq: 64,
     bookName: {
       en: "3 John",
