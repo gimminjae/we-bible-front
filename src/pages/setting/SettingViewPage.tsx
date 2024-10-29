@@ -46,7 +46,7 @@ function SettingViewPage() {
 
   const handleClickFont = useCallback(
     (font: string) => (e: any) => {
-      setCookie("font", font)
+      setCookie("font", font, { maxAge: 2592000 }) // 60 * 60 * 24 * 30 1month
       info("앱이 새로고침됩니다")
       setTimeout(() => window.location.reload(), 2000)
     },
