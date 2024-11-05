@@ -32,7 +32,21 @@ import useBibleSearchParams from "../../store/zustand/BibleSearchParams"
 import { bibleInfos, getBookName, versions } from "../../api/bible"
 import CancelIcon from "@mui/icons-material/Cancel"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import { useTheme } from "@mui/material/styles"
+import { styled, useTheme } from "@mui/material/styles"
+import { grey } from "@mui/material/colors"
+
+const Puller = styled("div")(({ theme }) => ({
+  width: 30,
+  height: 6,
+  backgroundColor: grey[300],
+  borderRadius: 3,
+  position: "absolute",
+  top: 8,
+  left: "calc(50% - 15px)",
+  ...theme.applyStyles("dark", {
+    backgroundColor: grey[900],
+  }),
+}))
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -164,6 +178,7 @@ function BibleViewPageHeader() {
         role="presentation"
         onKeyDown={toggleDrawerBible(false)}
       >
+        <Puller />
         <ListItemText
           onClick={toggleDrawerBible(false)}
           className="text-center"
@@ -262,15 +277,16 @@ function BibleViewPageHeader() {
         role="presentation"
         onKeyDown={toggleDrawerLang(false)}
       >
+        <Puller />
         <List>
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemText
+              {/* <ListItemText
                 onClick={toggleDrawerLang(false)}
                 className="text-center"
               >
                 <CancelIcon />
-              </ListItemText>
+              </ListItemText> */}
             </ListItemButton>
           </ListItem>
           {versions.map((el, idx) => (
@@ -310,10 +326,12 @@ function BibleViewPageHeader() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          borderRadius: "1px",
         }}
         onKeyDown={toggleDrawerFontSize(false)}
       >
-        <div className="w-[90%] mt-10 flex justify-between whitespace-nowrap">
+        <Puller />
+        <div className="w-[90%] mt-10 flex justify-between whitespace-nowrap rounded-t-lg">
           <FormControlLabel
             control={
               <Switch
