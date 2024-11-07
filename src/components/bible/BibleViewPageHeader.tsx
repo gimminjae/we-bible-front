@@ -1,4 +1,14 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react"
+import {
+  memo,
+  ReactNode,
+  SyntheticEvent,
+  KeyboardEvent,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 import { setCookie } from "../../util/cookie"
 import Box from "@mui/material/Box"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
@@ -49,7 +59,7 @@ const Puller = styled("div")(({ theme }) => ({
 }))
 
 interface TabPanelProps {
-  children?: React.ReactNode
+  children?: ReactNode
   dir?: string
   index: number
   value: number
@@ -101,13 +111,13 @@ function BibleViewPageHeader() {
 
   const toggleDrawerBible =
     (open: boolean, bookCode?: string, chapter?: number) =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
+    (event: KeyboardEvent | MouseEvent) => {
       if (bookCode && chapter) set(bookCode, chapter)
       if (
         event &&
         event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
+        ((event as KeyboardEvent).key === "Tab" ||
+          (event as KeyboardEvent).key === "Shift")
       ) {
         return
       }
@@ -116,13 +126,13 @@ function BibleViewPageHeader() {
     }
   const toggleDrawerFontSize =
     (open: boolean, bookCode?: string, chapter?: number) =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
+    (event: KeyboardEvent | MouseEvent) => {
       if (bookCode && chapter) set(bookCode, chapter)
       if (
         event &&
         event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
+        ((event as KeyboardEvent).key === "Tab" ||
+          (event as KeyboardEvent).key === "Shift")
       ) {
         return
       }
@@ -130,14 +140,13 @@ function BibleViewPageHeader() {
       setFontDrawer(open)
     }
   const toggleDrawerLang =
-    (open: boolean, lang?: string) =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
+    (open: boolean, lang?: string) => (event: KeyboardEvent | MouseEvent) => {
       if (lang) changeLang(lang)
       if (
         event &&
         event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
+        ((event as KeyboardEvent).key === "Tab" ||
+          (event as KeyboardEvent).key === "Shift")
       ) {
         return
       }
@@ -167,7 +176,7 @@ function BibleViewPageHeader() {
   const theme = useTheme()
   const [value, setValue] = useState(0)
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
 
