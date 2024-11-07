@@ -1,4 +1,4 @@
-import React from "react"
+import { memo } from "react"
 import useHeader from "../../hooks/useHeader"
 import { Paper, Slide, useScrollTrigger } from "@mui/material"
 
@@ -15,4 +15,4 @@ function Header({ ...props }) {
     </Slide>
   )
 }
-export default React.memo(Header)
+export default memo(Header)
