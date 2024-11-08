@@ -109,37 +109,39 @@ function BibleViewPageHeader() {
   const [languageDrawer, setLanguageDrawer] = useState(false)
   const [fontDrawer, setFontDrawer] = useState(false)
 
-  const toggleDrawerBible =
+  const toggleDrawerBible = useCallback(
     (open: boolean, bookCode?: string, chapter?: number) =>
-    (event: KeyboardEvent | MouseEvent) => {
-      if (bookCode && chapter) set(bookCode, chapter)
-      if (
-        event &&
-        event.type === "keydown" &&
-        ((event as KeyboardEvent).key === "Tab" ||
-          (event as KeyboardEvent).key === "Shift")
-      ) {
-        return
-      }
-
-      setBibleDrawer(open)
-    }
-  const toggleDrawerFontSize =
+      (event: KeyboardEvent | MouseEvent) => {
+        if (bookCode && chapter) set(bookCode, chapter)
+        if (
+          event &&
+          event.type === "keydown" &&
+          ((event as KeyboardEvent).key === "Tab" ||
+            (event as KeyboardEvent).key === "Shift")
+        ) {
+          return
+        }
+        setBibleDrawer(open)
+      },
+    [set]
+  )
+  const toggleDrawerFontSize = useCallback(
     (open: boolean, bookCode?: string, chapter?: number) =>
-    (event: KeyboardEvent | MouseEvent) => {
-      if (bookCode && chapter) set(bookCode, chapter)
-      if (
-        event &&
-        event.type === "keydown" &&
-        ((event as KeyboardEvent).key === "Tab" ||
-          (event as KeyboardEvent).key === "Shift")
-      ) {
-        return
-      }
-
-      setFontDrawer(open)
-    }
-  const toggleDrawerLang =
+      (event: KeyboardEvent | MouseEvent) => {
+        if (bookCode && chapter) set(bookCode, chapter)
+        if (
+          event &&
+          event.type === "keydown" &&
+          ((event as KeyboardEvent).key === "Tab" ||
+            (event as KeyboardEvent).key === "Shift")
+        ) {
+          return
+        }
+        setFontDrawer(open)
+      },
+    [set]
+  )
+  const toggleDrawerLang = useCallback(
     (open: boolean, lang?: string) => (event: KeyboardEvent | MouseEvent) => {
       if (lang) changeLang(lang)
       if (
@@ -152,7 +154,9 @@ function BibleViewPageHeader() {
       }
 
       setLanguageDrawer(open)
-    }
+    },
+    [changeLang]
+  )
 
   const rectangle = useCallback(
     (text: any) => (
@@ -176,9 +180,12 @@ function BibleViewPageHeader() {
   const theme = useTheme()
   const [value, setValue] = useState(0)
 
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
-    setValue(newValue)
-  }
+  const handleChange = useCallback(
+    (event: SyntheticEvent, newValue: number) => {
+      setValue(newValue)
+    },
+    []
+  )
 
   const bibleSelect = useMemo(
     () => (
@@ -211,7 +218,7 @@ function BibleViewPageHeader() {
           {bibleInfos.slice(0, 40).map(
             (info, index) =>
               index > 0 && (
-                <Accordion>
+                <Accordion key={index}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1-content"
@@ -224,8 +231,9 @@ function BibleViewPageHeader() {
                       {Array.from(
                         { length: info.maxChapter },
                         (_, i) => i + 1
-                      ).map((el, index) => (
+                      ).map((el, idx) => (
                         <Badge
+                          key={idx}
                           sx={{
                             margin: 1,
                           }}
@@ -245,7 +253,7 @@ function BibleViewPageHeader() {
           {bibleInfos.slice(39).map(
             (info, index) =>
               index > 0 && (
-                <Accordion>
+                <Accordion key={index}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1-content"
@@ -258,8 +266,9 @@ function BibleViewPageHeader() {
                       {Array.from(
                         { length: info.maxChapter },
                         (_, i) => i + 1
-                      ).map((el, index) => (
+                      ).map((el, idx) => (
                         <Badge
+                          key={idx}
                           sx={{
                             margin: 1,
                           }}
@@ -360,8 +369,10 @@ function BibleViewPageHeader() {
               label="secondLang"
               onChange={handleChangeSecondLang}
             >
-              {versions.map((version) => (
-                <MenuItem value={version.val}>{version.txt}</MenuItem>
+              {versions.map((version, index) => (
+                <MenuItem key={index} value={version.val}>
+                  {version.txt}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>

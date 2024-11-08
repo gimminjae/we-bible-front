@@ -50,8 +50,9 @@ function ToggleButtonsMultiple({
         bgcolor: bgColor,
       }}
     >
-      {functionAndIcons.map((obj) => (
+      {functionAndIcons.map((obj, index: number) => (
         <ToggleButton
+          key={index}
           value={obj.value}
           aria-label={obj.value}
           onClick={obj.function}
