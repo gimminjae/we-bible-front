@@ -90,7 +90,7 @@ function SettingViewPage() {
             </RadioGroup>
           </div>
         </FormControl>
-        <FormControl>
+        <FormControl className="w-full">
           <FormLabel id="font">Font</FormLabel>
           <div>
             {fontList.map(
