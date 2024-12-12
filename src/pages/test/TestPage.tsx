@@ -1,4 +1,8 @@
 function TestPage() {
-  return <div>test page</div>
+  return (
+    <div>
+      <button>button</button>
+    </div>
+  )
 }
 export default TestPage
