@@ -1,5 +1,5 @@
 import { BibleInfo } from "../domain/bible/bible"
-import { api } from "../hooks/useApi"
+import { api } from "./api"
 
 export const bibleInfos = [
   {
