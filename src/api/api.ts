@@ -1,6 +1,4 @@
 import axios from "axios"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import util from "../util/util"
 
 export const api = {
