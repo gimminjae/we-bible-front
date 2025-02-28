@@ -42,4 +42,3 @@ function remove(url: string, data = {}) {
 function head(url: string, data = {}) {
   return instance.head(url, data).then((response) => response.data)
 }
-
