@@ -18,6 +18,8 @@ const useAuth = () => {
 
   const signIn = useCallback(async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signInWithPassword({
+      phone: "",
+      options: {},
       email,
       password,
     })
@@ -39,10 +41,8 @@ const useAuth = () => {
   const [auth, setAuth] = useState<any>(null)
 
   const getAuth: any = useCallback(async () => {
-    // const { data: userIdentities, error: userIdError } =
-    //   await supabase.auth.getUserIdentities()
-    const { data: user, error: userError } = await supabase.auth.getUser()
-    return setAuth(user.user ? user.user : null)
+    const { data, error: userError } = await supabase.auth.getUser()
+    return setAuth(data?.user ? data.user : null)
   }, [supabase.auth])
 
   const updateUserInfo = useCallback(async (attributes: UserAttributeProps) => {
@@ -60,7 +60,7 @@ const useAuth = () => {
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event, session) => {
-      // if (event === "PASSWORD_RECOVERY") {
+      // if (event === "PASSWORD_RECOVERY") { // event 값에 따라 다음 로직 분기 처리
       //   setShowResetForm(true);
       // }
       getAuth()
