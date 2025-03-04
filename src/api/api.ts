@@ -1,6 +1,4 @@
 import axios from "axios"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import util from "../util/util"
 
 export const api = {
@@ -44,34 +42,3 @@ function remove(url: string, data = {}) {
 function head(url: string, data = {}) {
   return instance.head(url, data).then((response) => response.data)
 }
-
-const useApi = ({ api, onSuccess, onError, onComplete }: any) => {
-  const [data, setData] = useState()
-  const navigate = useNavigate()
-
-  const callApi = (params: any) =>
-    api(params)
-      .then((res: any) => {
-        const result = res.data ? res.data : res
-        setData(result)
-        if (onSuccess) onSuccess(result, params)
-        return result
-      })
-      .catch((err: any) => {
-        if (err.response?.status === 401) {
-          navigate("/")
-          // dispatch(logout())
-        }
-        if (onError) onError(err)
-      })
-      .finally(() => {
-        if (onComplete) onComplete()
-      })
-
-  return {
-    callApi,
-    data,
-  }
-}
-
-export default useApi
