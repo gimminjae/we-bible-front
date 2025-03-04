@@ -195,12 +195,7 @@ function BibleViewPageHeader() {
         onKeyDown={toggleDrawerBible(false)}
       >
         <Puller />
-        <ListItemText
-          onClick={toggleDrawerBible(false)}
-          className="text-center"
-        >
-          <CancelIcon />
-        </ListItemText>
+        <List></List> {/**/}
         <AppBar position="static">
           <Tabs
             value={value}
@@ -215,74 +210,86 @@ function BibleViewPageHeader() {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0} dir={theme.direction}>
-          {bibleInfos.slice(0, 40).map(
-            (info, index) =>
-              index > 0 && (
-                <Accordion key={index}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1-content"
-                    id="panel1-header"
-                  >
-                    {getBookName(info.bookCode, searchParam.lang)}
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <div className="grid grid-cols-5">
-                      {Array.from(
-                        { length: info.maxChapter },
-                        (_, i) => i + 1
-                      ).map((el, idx) => (
-                        <Badge
-                          key={idx}
-                          sx={{
-                            margin: 1,
-                          }}
-                          color="secondary"
-                          onClick={toggleDrawerBible(false, info.bookCode, el)}
-                        >
-                          {rectangle(el)}
-                        </Badge>
-                      ))}
-                    </div>
-                  </AccordionDetails>
-                </Accordion>
-              )
-          )}
+          <div className="overflow-y-auto h-80">
+            {bibleInfos.slice(0, 40).map(
+              (info, index) =>
+                index > 0 && (
+                  <Accordion key={index}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1-content"
+                      id="panel1-header"
+                    >
+                      {getBookName(info.bookCode, searchParam.lang)}
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <div className="grid grid-cols-5">
+                        {Array.from(
+                          { length: info.maxChapter },
+                          (_, i) => i + 1
+                        ).map((el, idx) => (
+                          <Badge
+                            key={idx}
+                            sx={{
+                              margin: 1,
+                            }}
+                            color="secondary"
+                            onClick={toggleDrawerBible(
+                              false,
+                              info.bookCode,
+                              el
+                            )}
+                          >
+                            {rectangle(el)}
+                          </Badge>
+                        ))}
+                      </div>
+                    </AccordionDetails>
+                  </Accordion>
+                )
+            )}
+          </div>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          {bibleInfos.slice(39).map(
-            (info, index) =>
-              index > 0 && (
-                <Accordion key={index}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1-content"
-                    id="panel1-header"
-                  >
-                    {getBookName(info.bookCode, searchParam.lang)}
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <div className="grid grid-cols-5">
-                      {Array.from(
-                        { length: info.maxChapter },
-                        (_, i) => i + 1
-                      ).map((el, idx) => (
-                        <Badge
-                          key={idx}
-                          sx={{
-                            margin: 1,
-                          }}
-                          color="secondary"
-                          onClick={toggleDrawerBible(false, info.bookCode, el)}
-                        >
-                          {rectangle(el)}
-                        </Badge>
-                      ))}
-                    </div>
-                  </AccordionDetails>
-                </Accordion>
-              )
-          )}
+          <div className="overflow-y-auto h-80">
+            {bibleInfos.slice(39).map(
+              (info, index) =>
+                index > 0 && (
+                  <Accordion key={index}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1-content"
+                      id="panel1-header"
+                    >
+                      {getBookName(info.bookCode, searchParam.lang)}
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <div className="grid grid-cols-5">
+                        {Array.from(
+                          { length: info.maxChapter },
+                          (_, i) => i + 1
+                        ).map((el, idx) => (
+                          <Badge
+                            key={idx}
+                            sx={{
+                              margin: 1,
+                            }}
+                            color="secondary"
+                            onClick={toggleDrawerBible(
+                              false,
+                              info.bookCode,
+                              el
+                            )}
+                          >
+                            {rectangle(el)}
+                          </Badge>
+                        ))}
+                      </div>
+                    </AccordionDetails>
+                  </Accordion>
+                )
+            )}
+          </div>
         </TabPanel>
       </Box>
     ),
