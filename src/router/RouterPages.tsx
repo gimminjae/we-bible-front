@@ -3,6 +3,7 @@ import BibleViewPage from "../pages/bible/BibleViewPage"
 import MyViewPage from "../pages/my/MyViewPage"
 import SettingViewPage from "../pages/setting/SettingViewPage"
 import TestPage from "../pages/test/TestPage"
+import SignUpPage from "../pages/member/SignUpPage"
 
 const Home = () => <div>Home Page</div>
 type Page = {
@@ -29,5 +30,9 @@ export const RouterPages: Page[] = [
   {
     path: "/test-page",
     page: <TestPage />,
+  },
+  {
+    path: "/sign-up",
+    page: <SignUpPage />,
   },
 ]
